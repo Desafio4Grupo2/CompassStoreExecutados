@@ -1,13 +1,13 @@
-import { Schema, Document } from 'mongoose'
+import { Schema } from 'mongoose'
 
-export interface IProduct extends Document {
+export interface IProduct {
   name: string
   category: string
   currency: string
   price: number
 }
 
-export interface IProductResponse extends Document {
+export interface IProductResponse {
   name: string
   category: string
   currency: string

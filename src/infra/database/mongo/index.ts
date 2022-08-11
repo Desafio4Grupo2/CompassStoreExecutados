@@ -1,5 +1,9 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
+dotenv.config({
+  path: '.env'
+})
 class Database {
   constructor () {
     this.connect()
@@ -7,7 +11,7 @@ class Database {
 
   connect () {
     return mongoose.connect(
-      process.env.MONGO_DB_URL || 'mongodb://localhost:27017/bolsista'
+      'mongodb+srv://ant:123@challenger3.mp8j38c.mongodb.net/Challenger3'
     )
   }
 }

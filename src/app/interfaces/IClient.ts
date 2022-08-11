@@ -1,11 +1,11 @@
-import { Schema, Document } from 'mongoose'
+import { Schema } from 'mongoose'
 
-export interface IClient extends Document {
+export interface IClient {
   name: string
   cpf: string
-  birthday: string
+  birthday?: string
   email: string
-  password: string
+  password?: string
   cep: string
   uf: string
   city: string
@@ -15,7 +15,7 @@ export interface IClient extends Document {
   neighborhood: string
 }
 
-export interface IClientResponse extends Document {
+export interface IClientResponse {
   name: string
   cpf: string
   birthday: string

@@ -1,9 +1,11 @@
-import { IClientResponse, IClient } from '../interfaces/IClient'
+import { PaginateResult } from 'mongoose'
+
+import { IClient } from '../interfaces/IClient'
 import ClientRepository from '../repositories/ClientRepository'
 
 class ClientService {
-  async get (payload: IClient): Promise<IClientResponse> {
-    const result = await ClientRepository.create(payload)
+  async get (payload: any): Promise<PaginateResult<IClient>> {
+    const result = await ClientRepository.get(payload)
     return result
   }
 }
