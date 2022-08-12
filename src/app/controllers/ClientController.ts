@@ -19,10 +19,9 @@ class ClientController {
     try {
 
       const id = req.params.id
-      const { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood } = req.body
-      const body = await ClientService.getClient(id, { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood })
+      const { name, cpf, password, birthday, email, cep, uf, city, address, number, complement, neighborhood } = req.body
+      const body = await ClientService.getClient(id, { name, cpf, birthday, password, email, cep, uf, city, address, number, complement, neighborhood })
       return res.status(201).json(body)
-
     } catch (error) {
       return res.status(400).json({error})
     }
@@ -34,8 +33,8 @@ class ClientController {
       const { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood } = req.body
       const result = await ClientService.updateClient(_id, { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood })
       return res.status(200).json(result)
-    } catch (error) {
-      return res.status(400).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ error })
     }
   }
 

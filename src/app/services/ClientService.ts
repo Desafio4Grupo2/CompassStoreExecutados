@@ -2,6 +2,7 @@ import { PaginateResult } from 'mongoose'
 import { IClient, IClientResponse } from '../interfaces/IClient'
 import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
+import NotFoundError from '../errors/NotFoundError'
 
 class ClientService {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
@@ -15,9 +16,14 @@ class ClientService {
     return result
   }
 
-  public async updateClient (ClientId: any, Payload: IClient) {
+  public async updateClient (ClientId: string, Payload: IClient) {
+    const findedClient = await ClientRepository.getClientByID(ClientId)
+    if(!findedClient){
+      throw new NotFoundError('Client not found')
+    } 
     const result = await ClientRepository.updateClient(ClientId, Payload)
     return result
+    
   }
 
 
