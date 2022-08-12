@@ -1,11 +1,11 @@
 import { Schema } from 'mongoose'
 
-export interface IClient{
+export interface IClient {
   name: string
   cpf: string
-  birthday: Date
+  birthday: String
   email: string
-  password?: string
+  password: string
   cep: string
   uf: string
   city: string
@@ -15,7 +15,7 @@ export interface IClient{
   neighborhood: string
 }
 
-export interface IClientResponse{
+export interface IClientResponse {
   name: string
   cpf: string
   birthday: Date
