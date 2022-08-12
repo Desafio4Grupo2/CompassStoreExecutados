@@ -4,11 +4,10 @@ import { IClient } from '../interfaces/IClient'
 import ClientSchema from '../schemas/ClientSchema'
 
 class ClientRepository {
-  public async get (payload: any): Promise<PaginateResult<IClient>> { // any
-    console.log(payload)
+  public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
     return ClientSchema.paginate(payload,
       {
-        page: 1,
+        page,
         select: [
           'name',
           'cpf',
