@@ -13,7 +13,7 @@ const schema = new Schema<IClient>({
   uf: { type: String, required: true },
   city: { type: String, required: true },
   address: { type: String, required: true },
-  number: { type: String, required: true },
+  number: { type: Number, required: true },
   complement: { type: String },
   neighborhood: { type: String, required: true }
 })

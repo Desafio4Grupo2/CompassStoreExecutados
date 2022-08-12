@@ -3,14 +3,14 @@ import { Schema } from 'mongoose'
 export interface IClient {
   name: string
   cpf: string
-  birthday: string
+  birthday: String
   email: string
   password: string
   cep: string
   uf: string
   city: string
   address: string
-  number: string
+  number: number
   complement: string
   neighborhood: string
 }
@@ -18,9 +18,9 @@ export interface IClient {
 export interface IClientResponse {
   name: string
   cpf: string
-  birthday: string
+  birthday: Date
   email: string
-  password: string
+  password?: string
   cep: string
   uf: string
   city: string

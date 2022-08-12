@@ -1,6 +1,6 @@
-import { Schema, Document } from 'mongoose'
+import { Schema } from 'mongoose'
 
-export interface ISale extends Document {
+export interface ISale {
   client_id: Schema.Types.ObjectId
   clientCurrency: string
   date: string
@@ -13,7 +13,7 @@ export interface ISale extends Document {
   totalClient: number
 }
 
-export interface ISaleResponse extends Document {
+export interface ISaleResponse {
   client: Schema.Types.ObjectId
   clientCurrency: string
   date: string
