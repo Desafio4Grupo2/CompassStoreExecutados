@@ -7,14 +7,8 @@ class ProductRepository {
     return ProductSchema.paginate(payload,
       {
         page,
-        select: [
-          'name',
-          'category',
-          'currency',
-          'price'
-        ],
         customLabels: {
-          docs: 'Product',
+          docs: 'Products',
           page: 'currentPage',
           totalPages: 'totalPages',
           limit: 'pageSize',

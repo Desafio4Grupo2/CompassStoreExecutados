@@ -6,7 +6,7 @@ class ProductController {
     try {
       const { page, ...body } = req.query
 
-      const result = await ProductService.get(body, page)
+      const result = await ProductService.get(body, page || 1)
       return res.status(201).json(result)
     } catch (error) {
       return res.status(400).json({ error })
