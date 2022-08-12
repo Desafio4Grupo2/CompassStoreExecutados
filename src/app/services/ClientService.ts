@@ -21,8 +21,8 @@ class ClientService {
   }
 
 
-  public async getClient (Id: any, Payload: IClient) {
-    const result = await ClientRepository.getClient(Id, Payload)
+  public async getClient (Id: any) {
+    const result = await ClientRepository.getClient(Id)
     return result
   }
 
