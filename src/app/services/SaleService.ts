@@ -1,6 +1,3 @@
-import { ISaleResponse, ISale } from '../interfaces/ISale'
-import SaleRepository from '../repositories/SaleRepository'
-
 class SaleService {
   /*
   async create (payload: ISale): Promise<ISaleResponse> {

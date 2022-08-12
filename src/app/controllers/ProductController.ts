@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import ProductService from '../services/ProductService'
 
+
 class ProductController {
 
   public async updateProduct (req: Request, res: Response) {
@@ -9,6 +10,17 @@ class ProductController {
       const { name, category, currency, price } = req.body
       const result = await ProductService.updateProduct(_id, { name, category, currency, price })
       return res.status(200).json(result)
+
+    }catch(error){
+      return res.status(400).json({ error })
+    }
+  }  
+
+  public async get (req: Request, res: Response): Promise<Response> {
+    try {
+      const { page, ...body } = req.query
+      const result = await ProductService.get(body, page)
+      return res.status(201).json(result)
     } catch (error) {
       return res.status(400).json({ error })
     }
