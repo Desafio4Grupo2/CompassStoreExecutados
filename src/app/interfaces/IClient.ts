@@ -18,9 +18,9 @@ export interface IClient {
 export interface IClientResponse {
   name: string
   cpf: string
-  birthday: string
+  birthday?: string
   email: string
-  password: string
+  password?: string
   cep: string
   uf: string
   city: string

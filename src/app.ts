@@ -1,7 +1,12 @@
 import express from 'express'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import routes from './routes/index.router'
 import './infra/database/mongo/index'
+
+dotenv.config({
+  path: '.env'
+})
 
 class App {
   public server: express.Application

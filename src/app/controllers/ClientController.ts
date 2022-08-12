@@ -10,7 +10,7 @@ class ClientController {
       const result = await ClientService.get(body)
       return res.status(201).json(result)
     } catch (error) {
-      return res.status(500).json({ error })
+      return res.status(400).json({ error })
     }
   }
 }
