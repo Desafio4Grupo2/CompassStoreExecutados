@@ -1,6 +1,7 @@
 import SaleService from '../services/SaleService'
 
 class SaleController {
+  /*
   async create (req, res) {
     try {
       const { name, age } = req.body
@@ -10,6 +11,7 @@ class SaleController {
       return res.status(500).json({ error })
     }
   }
+  */
 }
 
 export default new SaleController()

@@ -1,24 +1,24 @@
 import { Schema } from 'mongoose'
 
-export interface IClient {
+export interface IClient{
   name: string
   cpf: string
-  birthday?: string
+  birthday: Date
   email: string
   password?: string
   cep: string
   uf: string
   city: string
   address: string
-  number: string
+  number: number
   complement: string
   neighborhood: string
 }
 
-export interface IClientResponse {
+export interface IClientResponse{
   name: string
   cpf: string
-  birthday?: string
+  birthday: Date
   email: string
   password?: string
   cep: string

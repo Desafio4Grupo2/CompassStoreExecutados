@@ -5,15 +5,15 @@ import { IClient } from '../interfaces/IClient'
 
 const schema = new Schema<IClient>({
   name: { type: String, required: true },
-  cpf: { type: String, required: true },
-  birthday: { type: String, required: true },
-  email: { type: String, required: true },
+  cpf: { type: String, unique: true, required: true },
+  birthday: { type: Date, required: true },
+  email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   cep: { type: String, required: true },
   uf: { type: String, required: true },
   city: { type: String, required: true },
   address: { type: String, required: true },
-  number: { type: String, required: true },
+  number: { type: Number, required: true },
   complement: { type: String },
   neighborhood: { type: String, required: true }
 })
