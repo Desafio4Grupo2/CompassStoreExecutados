@@ -2,8 +2,9 @@ import { IProductResponse, IProduct } from '../interfaces/IProduct'
 import ProductRepository from '../repositories/ProductRepository'
 
 class ProductService {
-  async create (payload: IProduct): Promise<IProductResponse> {
-    const result = await ProductRepository.create(payload)
+
+  public async updateProduct (ProductId: any, Payload: IProduct) {
+    const result = await ProductRepository.updateProduct(ProductId, Payload)
     return result
   }
 }
