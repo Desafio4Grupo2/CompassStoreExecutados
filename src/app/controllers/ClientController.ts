@@ -32,8 +32,8 @@ class ClientController {
       const payload: IClient = req.body
       const result = await ClientService.create(payload)
       return res.status(201).json(result)
-    } catch (error) {
-      return res.status(500).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ error })
     }
   }
 }
