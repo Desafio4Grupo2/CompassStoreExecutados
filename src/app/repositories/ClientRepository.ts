@@ -43,6 +43,10 @@ class ClientRepository {
   public async getClient (ClientId: string, Payload: IClient) {
     return ClientSchema.findById(ClientId, Payload, { new: true }).select('-password')
   }
+  public async create (payload: IClient): Promise<any> {
+    return ClientSchema.create(payload)
+
+  }
 }
 
 export default new ClientRepository()

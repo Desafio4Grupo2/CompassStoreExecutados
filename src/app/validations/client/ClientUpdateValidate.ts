@@ -13,7 +13,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       complement: Joi.string().optional()
     })
 
-    const { error } = await schema.validate(req.body, { abortEarly: true })
+    const { error } = await schema.validate(req.body, { abortEarly: false })
     if (error) throw error
     return next()
   } catch (error: any) {

@@ -5,61 +5,60 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = Joi.object({
       _id: Joi.string()
-        .forbidden(),
+        .optional(),
       name: Joi.string()
-        .required()
         .min(3)
-        .max(100),
+        .max(100)
+        .optional(),
       cpf: Joi.string()
-        .required()
+        .optional()
         .min(11)
         .max(11)
         .pattern(/^[0-9]+$/),
       birthday: Joi.date()
         .iso()
-        .max('now')
-        .required(),
+        .max('now'),
       email: Joi.string()
-        .email()
-        .required(),
+        .optional()
+        .email(),
       password: Joi.string()
-        .required()
+        .optional()
         .min(6)
         .max(20),
       cep: Joi.string()
-        .required()
         .min(8)
         .max(8)
+        .optional()
         .pattern(/^[0-9]+$/),
       uf: Joi.string()
-        .required()
         .min(2)
         .max(2)
+        .optional()
         .pattern(/^[a-zA-Z]+$/),
       city: Joi.string()
-        .required()
         .min(3)
         .max(50)
+        .optional()
         .pattern(/^[a-zA-Z]+$/),
       address: Joi.string()
-        .required()
         .min(3)
         .max(50)
+        .optional()
         .pattern(/^[a-zA-Z]+$/),
       number: Joi.string()
-        .required()
         .min(1)
+        .optional()
         .max(10),
       complement: Joi.string()
         .optional()
         .min(3)
         .max(50),
       neighborhood: Joi.string()
-        .required()
+        .optional()
         .min(3)
         .max(50)
     })
-    const { error } = await schema.validate(req.body, { abortEarly: true })
+    const { error } = await schema.validateAsync(req.body, { abortEarly: true })
     if (error) throw error.message
     return next()
   } catch (error) {

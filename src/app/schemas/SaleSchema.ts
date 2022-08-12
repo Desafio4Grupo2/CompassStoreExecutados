@@ -4,7 +4,7 @@ import paginate from 'mongoose-paginate-v2'
 import { ISale } from '../interfaces/ISale'
 
 const schema = new Schema<ISale>({
-  client_id: { type: Schema.Types.ObjectId, ref: 'Client' },
+  client: { type: Schema.Types.ObjectId, ref: 'Client' },
   clientCurrency: { type: String, required: true },
   date: { type: String, required: true },
   items: [{
