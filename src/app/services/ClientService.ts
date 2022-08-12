@@ -18,6 +18,11 @@ class ClientService {
     const result = await ClientRepository.updateClient(ClientId, Payload)
     return result
   }
+
+  public async getClient (Id: any, Payload: IClient) {
+    const result = await ClientRepository.getClient(Id, Payload)
+    return result
+  }
 }
 
 export default new ClientService()
