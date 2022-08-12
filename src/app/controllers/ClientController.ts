@@ -1,6 +1,5 @@
 import { IClient } from 'app/interfaces/IClient'
 import { Request, Response } from 'express'
-
 import ClientService from '../services/ClientService'
 
 class ClientController {
@@ -16,6 +15,19 @@ class ClientController {
     }
   }
 
+  public async getById (req: Request, res: Response): Promise<Response> {
+    try {
+
+      const id = req.params.id
+      const { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood } = req.body
+      const body = await ClientService.getClient(id, { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood })
+      return res.status(201).json(body)
+
+    } catch (error) {
+      return res.status(400).json({error})
+    }
+  }
+ 
   public async updateClient (req: Request, res: Response) {
     try {
       const _id = req.params.id

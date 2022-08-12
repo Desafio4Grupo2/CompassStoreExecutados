@@ -20,6 +20,13 @@ class ClientService {
     return result
   }
 
+
+  public async getClient (Id: any, Payload: IClient) {
+    const result = await ClientRepository.getClient(Id, Payload)
+    return result
+  }
+
+
   async create (payload: IClient): Promise<IClientResponse> {
     try {
       // hashing the password

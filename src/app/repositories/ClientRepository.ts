@@ -20,7 +20,7 @@ class ClientRepository {
           'neighborhood'
         ],
         customLabels: {
-          docs: 'Clients',
+          docs: 'Client',
           page: 'currentPage',
           totalPages: 'totalPages',
           limit: 'pageSize',
@@ -40,8 +40,12 @@ class ClientRepository {
     return ClientSchema.findByIdAndUpdate(ClientId, Payload, { new: true }).select('-password')
   }
 
-  async create (payload: IClient): Promise<any> {
+  public async getClient (ClientId: string, Payload: IClient) {
+    return ClientSchema.findById(ClientId, Payload, { new: true }).select('-password')
+  }
+  public async create (payload: IClient): Promise<any> {
     return ClientSchema.create(payload)
+
   }
 }
 
