@@ -9,6 +9,7 @@ const routes = Router()
 routes.get('/api/v1/client', ClientController.get)
 // routes.put('/api/v1/client/:id', updateValidation, ClientController.put)
 // routes.get('/api/v1/client', ClientController.get)
+routes.get('/api/v1/client/:id', ClientController.getById)
 routes.put('/api/v1/client/:id', updateValidation, ClientController.updateClient)
 // routes.delete('/api/v1/client/:id', ClientController.delete)
 
