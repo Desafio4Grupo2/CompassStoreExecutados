@@ -1,3 +1,4 @@
+import { IClient } from 'app/interfaces/IClient'
 import { Request, Response } from 'express'
 
 import ClientService from '../services/ClientService'
@@ -8,6 +9,7 @@ class ClientController {
       const { page, ...body } = req.query
 
       const result = await ClientService.get(body, page)
+
       return res.status(201).json(result)
     } catch (error) {
       return res.status(400).json({ error })
@@ -22,6 +24,16 @@ class ClientController {
       return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error })
+    }
+  }
+
+  public async create (req: Request, res: Response): Promise<Response> {
+    try {
+      const payload: IClient = req.body
+      const result = await ClientService.create(payload)
+      return res.status(201).json(result)
+    } catch (error) {
+      return res.status(500).json({ error })
     }
   }
 }

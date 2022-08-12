@@ -1,5 +1,3 @@
-import SaleService from '../services/SaleService'
-
 class SaleController {
   /*
   async create (req, res) {
