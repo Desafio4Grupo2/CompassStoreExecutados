@@ -1,6 +1,27 @@
 import { NextFunction, Request, Response } from 'express'
 import Joi from 'joi'
 
+const isValidBirthday = (value: string, helpers: any) => { // any
+  const birthday = value.trim()
+  const date = birthday.split('/')
+
+  const numberday = parseInt(date[0])
+  const numbermonth = parseInt(date[1])
+  const numberyear = parseInt(date[2])
+
+  if (numberday < 1 || numberday > 31) {
+    return helpers.message('Day need to be between 1 and 31')
+  }
+
+  if (numbermonth < 1 || numbermonth > 12) {
+    return helpers.message('Month need to be between 1 and 12')
+  }
+
+  if (numberyear < 1900 || numberyear >= new Date().getFullYear()) {
+    return helpers.message('Year need to be between 1900 and current year')
+  }
+}
+
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = Joi.object({
@@ -15,9 +36,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         .min(11)
         .max(11)
         .pattern(/^[0-9]+$/),
-      birthday: Joi.date()
-        .iso()
-        .max('now')
+      birthday: Joi.string()
+        .custom(isValidBirthday)
         .required(),
       email: Joi.string()
         .email()
