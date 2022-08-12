@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose'
 
 export interface ISale {
-  client_id: Schema.Types.ObjectId
+  client: Schema.Types.ObjectId
   clientCurrency: string
   date: string
   items: Array<[{

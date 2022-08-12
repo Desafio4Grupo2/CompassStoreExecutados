@@ -20,7 +20,7 @@ class ClientRepository {
           'neighborhood'
         ],
         customLabels: {
-          docs: 'Client',
+          docs: 'Clients',
           page: 'currentPage',
           totalPages: 'totalPages',
           limit: 'pageSize',

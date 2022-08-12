@@ -3,11 +3,12 @@ import { IProduct } from '../interfaces/IProduct'
 import ProductRepository from '../repositories/ProductRepository'
 
 class ProductService {
-
   public async updateProduct (ProductId: any, Payload: IProduct) {
     const result = await ProductRepository.updateProduct(ProductId, Payload)
+
+    return result
   }
-    
+
   public async get (payload: any, page: any): Promise<PaginateResult<IProduct>> { // any
     const query: {[key:string]: object | boolean} = {}
     Object.keys(payload).forEach(key => {
