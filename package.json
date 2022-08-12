@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./src/server.ts",
     "dev": "nodemon -r dotenv/config ./src/server.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": ""
   },
   "license": "ISC",
   "devDependencies": {
