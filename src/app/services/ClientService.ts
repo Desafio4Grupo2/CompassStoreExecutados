@@ -6,6 +6,17 @@ class ClientService {
     const result = await ClientRepository.create(payload)
     return result
   }
+
+  async create (payload: IClient): Promise<IClientResponse> {
+    try {
+      // creating the client
+      const result = await ClientRepository.create(payload)
+      return result
+    } catch (error) {
+      console.log(error)
+      throw new Error()
+    }
+  }
 }
 
 export default new ClientService()
