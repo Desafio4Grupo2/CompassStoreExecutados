@@ -1,6 +1,6 @@
 import { ISale } from '../interfaces/ISale'
 import SaleSchema from '../schemas/SaleSchema'
-import { PaginateResult, Types } from 'mongoose'
+import { PaginateResult } from 'mongoose'
 import customLabels from '../utils/paginate'
 
 class SaleRepository {

@@ -20,14 +20,25 @@ class ClientService {
     return result
   }
 
-  public async updateClient (ClientId: string, Payload: IClient) {
+  public async updateClient (ClientId: string, payload: IClient) {
+    const { cep } = payload
+    const viacepResponse: IViaCepResponse = await getAddress(cep)
+
+    const { uf, localidade, logradouro, complemento, bairro } = viacepResponse
+
+    payload.uf = uf
+    payload.city = localidade
+    payload.address = logradouro
+    payload.neighborhood = bairro
+    payload.complement = complemento
+
     if (!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
 
     const findedClient = await ClientRepository.getById(ClientId)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
     }
-    const result = await ClientRepository.updateClient(ClientId, Payload)
+    const result = await ClientRepository.updateClient(ClientId, payload)
     return result
   }
 
@@ -75,13 +86,13 @@ class ClientService {
   }
 
   public async delete (id: string) {
-    if(!Types.ObjectId.isValid(id)) throw new BadRequestError('Client Id is not valid')   
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Client Id is not valid')
     const findedClient = await ClientRepository.getById(id)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
-    } 
-    await ClientRepository.delete(id);
     }
+    await ClientRepository.delete(id)
   }
+}
 
 export default new ClientService()
