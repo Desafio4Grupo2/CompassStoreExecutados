@@ -3,8 +3,8 @@ import { IClient, IClientResponse, IViaCepResponse } from '../interfaces/IClient
 import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
 import BadRequestError from '../errors/BadRequestError'
-import axios from 'axios'
 import NotFoundError from '../errors/NotFoundError'
+import getAddress from '../utils/viacep'
 
 class ClientService {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
@@ -46,14 +46,7 @@ class ClientService {
     const findedWithEmailClient = await ClientRepository.getByEmail(email)
     if (findedWithEmailClient) throw new BadRequestError('Client with this email already exists')
 
-    const viacepResponse: IViaCepResponse = await axios
-      .get(`https://viacep.com.br/ws/${cep}/json`)
-      .then((response: any) => {
-        return response.data
-      })
-      .catch((error: any) => {
-        console.log(error.message)
-      })
+    const viacepResponse: IViaCepResponse = await getAddress(cep)
 
     if (viacepResponse.erro) throw new BadRequestError('Cep is not valid')
 
