@@ -17,15 +17,14 @@ class ClientController {
 
   public async getById (req: Request, res: Response): Promise<Response> {
     try {
-
       const id = req.params.id
       const body = await ClientService.getClient(id)
       return res.status(201).json(body)
     } catch (error) {
-      return res.status(400).json({error})
+      return res.status(400).json({ error })
     }
   }
- 
+
   public async updateClient (req: Request, res: Response) {
     try {
       const _id = req.params.id
@@ -42,8 +41,8 @@ class ClientController {
       const payload: IClient = req.body
       const result = await ClientService.create(payload)
       return res.status(201).json(result)
-    } catch (error) {
-      return res.status(500).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ message: error.message, error })
     }
   }
 }
