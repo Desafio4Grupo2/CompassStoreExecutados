@@ -21,7 +21,6 @@ class ClientController {
       const id = req.params.id
       const body = await ClientService.getClient(id)
       return res.status(201).json(body)
-
     } catch (error) {
       return res.status(400).json({error})
     }
@@ -33,8 +32,8 @@ class ClientController {
       const { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood } = req.body
       const result = await ClientService.updateClient(_id, { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood })
       return res.status(200).json(result)
-    } catch (error) {
-      return res.status(400).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ error })
     }
   }
 
