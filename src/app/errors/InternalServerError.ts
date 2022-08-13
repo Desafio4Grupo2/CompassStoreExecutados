@@ -4,6 +4,6 @@ export default class InternalServerError extends Error {
   constructor (msg: string) {
     super(msg)
     this.name = 'Internal Server Error'
-    this.statusCode = 400
+    this.statusCode = 500
   }
 }

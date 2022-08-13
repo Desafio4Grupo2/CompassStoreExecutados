@@ -4,6 +4,6 @@ export default class BadRequestError extends Error {
   constructor (msg: string) {
     super(msg)
     this.name = 'Bad Request Error'
-    this.statusCode = 500
+    this.statusCode = 400
   }
 }
