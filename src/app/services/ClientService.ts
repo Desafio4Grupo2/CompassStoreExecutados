@@ -1,4 +1,4 @@
-import { PaginateResult } from 'mongoose'
+import { PaginateResult, Types } from 'mongoose'
 import { IClient, IClientResponse, IViaCepResponse } from '../interfaces/IClient'
 import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
@@ -70,9 +70,14 @@ class ClientService {
     return result
   }
 
-  async delete (id: any) {
-    const result = await ClientRepository.delete(id)
+  public async deleteClient (id: string) {
+    if(!Types.ObjectId.isValid(id)) throw new BadRequestError('Client Id is not valid')   
+    const findedClient = await ClientRepository.getClient(id)
+    if (!findedClient) {
+      throw new NotFoundError('Client not found')
+    } 
+    await ClientRepository.deleteClient(id);
+    }
   }
-}
 
 export default new ClientService()
