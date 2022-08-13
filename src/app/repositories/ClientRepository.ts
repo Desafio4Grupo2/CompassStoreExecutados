@@ -40,12 +40,9 @@ class ClientRepository {
     return ClientSchema.findByIdAndUpdate(ClientId, Payload, { new: true }).select('-password')
   }
 
-  public async getClientByID (ClientId: string): Promise<any> {
-    return ClientSchema.findById(ClientId)
-  }  
-
-  public async getClient (ClientId: string, Payload: IClient) {
-    return ClientSchema.findById(ClientId, Payload, { new: true }).select('-password')
+  
+  public async getClient (ClientId: string) {
+    return ClientSchema.findById(ClientId).select('-password')
   }
 
 

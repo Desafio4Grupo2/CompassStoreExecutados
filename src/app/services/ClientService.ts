@@ -17,7 +17,7 @@ class ClientService {
   }
 
   public async updateClient (ClientId: string, Payload: IClient) {
-    const findedClient = await ClientRepository.getClientByID(ClientId)
+    const findedClient = await ClientRepository.getClient(ClientId)
     if(!findedClient){
       throw new NotFoundError('Client not found')
     } 
@@ -27,8 +27,8 @@ class ClientService {
   }
 
 
-  public async getClient (Id: any, Payload: IClient) {
-    const result = await ClientRepository.getClient(Id, Payload)
+  public async getClient (Id: any) {
+    const result = await ClientRepository.getClient(Id)
     return result
   }
 
