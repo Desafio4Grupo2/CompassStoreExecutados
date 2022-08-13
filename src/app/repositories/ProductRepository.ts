@@ -4,9 +4,9 @@ import { PaginateResult } from 'mongoose'
 import customLabels from '../utils/paginate'
 
 class ProductRepository {
-  // async create (payload: IProduct): Promise<IProductResponse> {
-  // return ProductSchema.create(payload)
-  // }
+  async create (payload: IProduct) {
+    return ProductSchema.create(payload)
+  }
 
   public async updateProduct (ProductId: string, Payload: IProduct) {
     return ProductSchema.findByIdAndUpdate(ProductId, Payload, { new: true })

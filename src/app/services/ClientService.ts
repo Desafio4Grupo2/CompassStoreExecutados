@@ -21,8 +21,8 @@ class ClientService {
   }
 
   public async updateClient (ClientId: string, Payload: IClient) {
-    if(!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
-    
+    if (!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
+
     const findedClient = await ClientRepository.getById(ClientId)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
