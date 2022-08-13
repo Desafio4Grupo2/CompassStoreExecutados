@@ -49,6 +49,16 @@ class ProductController {
       })
     }
   }
+
+  public async getProductId (req: Request, res: Response): Promise<Response> {
+    try {
+      const id = req.params.id
+      const body = await ProductService.getProductByID(id)
+      return res.status(201).json(body)
+    } catch (error) {
+      return res.status(400).json({ error })
+    }
+  }
 }
 
 export default new ProductController()

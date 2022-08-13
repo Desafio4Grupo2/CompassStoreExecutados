@@ -3,6 +3,7 @@ import { PaginateResult, Types } from 'mongoose'
 import { IProduct } from '../interfaces/IProduct'
 import ProductRepository from '../repositories/ProductRepository'
 import BadRequestError from '../errors/BadRequestError'
+import { string } from 'joi'
 
 class ProductService {
   public async updateProduct (ProductId: string, Payload: IProduct) {
@@ -38,7 +39,11 @@ class ProductService {
 
   public async create (payload: IProduct): Promise<IProduct> {
     const result = await ProductRepository.create(payload)
+    return result
+  }
 
+  public async getProductByID (Id: any) {
+    const result = await ProductRepository.getProductByID(Id)
     return result
   }
 }
