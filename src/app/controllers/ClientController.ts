@@ -54,6 +54,7 @@ class ClientController {
       return res.status(204).json(request)
     } catch (error) {
       return res.status(404).json({ error })
+    }
   }
 }
 
