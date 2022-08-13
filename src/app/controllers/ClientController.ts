@@ -33,7 +33,7 @@ class ClientController {
       const result = await ClientService.create(payload)
       return res.status(201).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ error })
+      return res.status(error.statusCode || 500).json({ message: error.message, error })
     }
   }
 }
