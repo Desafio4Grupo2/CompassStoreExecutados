@@ -28,10 +28,20 @@ class SaleService {
     return result
   }
 
-  public async getById (Id: string) {
-    if (!Types.ObjectId.isValid(Id)) throw new BadRequestError('Id not valid')
+  public async getById (id: string) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Id not valid')
 
-    const result = await SaleRepository.getById(Id)
+    const result = await SaleRepository.getById(id)
+
+    if (!result) throw new NotFoundError('Sale Not Found')
+
+    return result
+  }
+
+  public async update (id: string, Payload: ISale) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Id not valid')
+
+    const result = await SaleRepository.update(id, Payload)
 
     if (!result) throw new NotFoundError('Sale Not Found')
 

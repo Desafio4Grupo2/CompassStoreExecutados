@@ -11,6 +11,10 @@ class SaleRepository {
   public async getById (ClientId: string) {
     return SaleSchema.findById(ClientId)
   }
+
+  public async update (id: string, Payload: ISale) {
+    return SaleSchema.findByIdAndUpdate(id, Payload, { returnDocument: 'after', runValidators: true })
+  }
 }
 
 export default new SaleRepository()

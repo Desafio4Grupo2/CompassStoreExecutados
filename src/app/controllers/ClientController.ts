@@ -11,7 +11,12 @@ class ClientController {
 
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -23,7 +28,12 @@ class ClientController {
 
       return res.status(200).json(body)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -34,7 +44,12 @@ class ClientController {
       const result = await ClientService.updateClient(_id, { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood })
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -44,7 +59,12 @@ class ClientController {
       const result = await ClientService.create(payload)
       return res.status(201).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ message: error.message, error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -55,7 +75,12 @@ class ClientController {
 
       return res.status(204).json(request)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 }

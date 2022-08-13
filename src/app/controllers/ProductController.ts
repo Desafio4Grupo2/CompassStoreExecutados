@@ -9,7 +9,12 @@ class ProductController {
       const result = await ProductService.updateProduct(_id, { name, category, currency, price })
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 400).json({ error })
+      return res.status(error.statusCode || 400).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -20,7 +25,12 @@ class ProductController {
       const result = await ProductService.get(body, page || 1)
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 400).json({ error })
+      return res.status(error.statusCode || 400).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 }
