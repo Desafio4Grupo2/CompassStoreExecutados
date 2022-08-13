@@ -36,7 +36,13 @@ class ClientService {
   }
 
   public async create (payload: IClient): Promise<IClientResponse> {
-    const { cep } = payload
+    const { cpf, email, cep } = payload
+
+    const findedWithCpfClient = await ClientRepository.getByCpf(cpf)
+    if (findedWithCpfClient) throw new BadRequestError('Client with this cpf already exists')
+
+    const findedWithEmailClient = await ClientRepository.getByEmail(email)
+    if (findedWithEmailClient) throw new BadRequestError('Client with this email already exists')
 
     const viacepResponse: IViaCepResponse = await axios
       .get(`https://viacep.com.br/ws/${cep}/json`)
@@ -73,8 +79,9 @@ class ClientService {
     return result
   }
 
-  async delete (id: any) {
+  async delete (id: string) {
     const result = await ClientRepository.delete(id)
+    return result
   }
 }
 

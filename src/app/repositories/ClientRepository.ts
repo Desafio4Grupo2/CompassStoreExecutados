@@ -20,7 +20,15 @@ class ClientRepository {
     return ClientSchema.create(payload)
   }
 
-  async delete (id: any): Promise<void> {
+  public async getByCpf (cpf: string) {
+    return ClientSchema.findOne({ cpf })
+  }
+
+  public async getByEmail (email: string) {
+    return ClientSchema.findOne({ email })
+  }
+
+  async delete (id: string): Promise<void> {
     await ClientSchema.findByIdAndDelete(id)
   }
 }
