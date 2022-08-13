@@ -52,17 +52,17 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         .max(8)
         .pattern(/^[0-9]+$/),
       uf: Joi.string()
-        .required()
+        .optional()
         .min(2)
         .max(2)
         .pattern(/^[a-zA-Z]+$/),
       city: Joi.string()
-        .required()
+        .optional()
         .min(3)
         .max(50)
         .pattern(/^[a-zA-Z]+$/),
       address: Joi.string()
-        .required()
+        .optional()
         .min(3)
         .max(50)
         .pattern(/^[a-zA-Z]+$/),
@@ -75,7 +75,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         .min(3)
         .max(50),
       neighborhood: Joi.string()
-        .required()
+        .optional()
         .min(3)
         .max(50)
     })

@@ -1,8 +1,9 @@
 import { PaginateResult } from 'mongoose'
-import { IClient, IClientResponse } from '../interfaces/IClient'
+import { IClient, IClientResponse, IViaCepResponse } from '../interfaces/IClient'
 import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
 import BadRequestError from '../errors/BadRequestError'
+import axios from 'axios'
 
 class ClientService {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
@@ -21,15 +22,38 @@ class ClientService {
     return result
   }
 
-  async create (payload: IClient): Promise<IClientResponse> {
+  public async create (payload: IClient): Promise<IClientResponse> {
+    const { cep } = payload
+
+    const viacepResponse: IViaCepResponse = await axios
+      .get(`https://viacep.com.br/ws/${cep}/json`)
+      .then((response) => {
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
+
+    if (viacepResponse.erro) throw new BadRequestError('Cep is not valid')
+
+    const { uf, localidade, logradouro, complemento, bairro } = viacepResponse
+
+    payload.uf = uf
+    payload.city = localidade
+    payload.address = logradouro
+    payload.neighborhood = bairro
+    payload.complement = complemento
+
+    if (payload.uf === '') throw new BadRequestError('Uf can not be empty')
+    if (payload.city === '') throw new BadRequestError('City can not be empty')
+    if (payload.address === '') throw new BadRequestError('Address can not be empty')
+    if (payload.neighborhood === '') throw new BadRequestError('Neighborhood can not be empty')
+
     const salt = await bcrypt.genSalt(10)
     payload.password = await bcrypt.hash(payload.password, salt)
 
     const result = await ClientRepository.create(payload)
-
-    if (result) {
-      throw new BadRequestError('Client not created')
-    }
+    if (!result) throw new BadRequestError('Client not created')
 
     result.cpf = result.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
 
