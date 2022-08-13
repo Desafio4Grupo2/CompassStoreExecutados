@@ -19,8 +19,8 @@ class ClientController {
     try {
 
       const id = req.params.id
-      const { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood } = req.body
-      const body = await ClientService.getClient(id, { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood })
+      const { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood } = req.body
+      const body = await ClientService.getClient(id, { name, cpf, birthday, password, email, cep, uf, city, address, number, complement, neighborhood })
       return res.status(201).json(body)
 
     } catch (error) {
