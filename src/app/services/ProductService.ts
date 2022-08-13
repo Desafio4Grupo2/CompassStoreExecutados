@@ -6,8 +6,8 @@ import BadRequestError from '../errors/BadRequestError'
 
 class ProductService {
   public async updateProduct (ProductId: string, Payload: IProduct) {
-    if(!Types.ObjectId.isValid(ProductId)) throw new BadRequestError('ProductId is not valid')
-    
+    if (!Types.ObjectId.isValid(ProductId)) throw new BadRequestError('ProductId is not valid')
+
     const foundProduct = await ProductRepository.getProductByID(ProductId)
     if (!foundProduct) {
       throw new NotFoundError('Product not found')
