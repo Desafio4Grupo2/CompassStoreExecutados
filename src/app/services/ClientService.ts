@@ -4,6 +4,7 @@ import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
 import BadRequestError from '../errors/BadRequestError'
 import axios from 'axios'
+import NotFoundError from '../errors/NotFoundError'
 
 class ClientService {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
@@ -17,8 +18,17 @@ class ClientService {
     return result
   }
 
-  public async updateClient (ClientId: any, Payload: IClient) {
+  public async updateClient (ClientId: string, Payload: IClient) {
+    const findedClient = await ClientRepository.getClient(ClientId)
+    if (!findedClient) {
+      throw new NotFoundError('Client not found')
+    }
     const result = await ClientRepository.updateClient(ClientId, Payload)
+    return result
+  }
+
+  public async getClient (Id: any) {
+    const result = await ClientRepository.getClient(Id)
     return result
   }
 

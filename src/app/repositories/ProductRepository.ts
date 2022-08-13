@@ -3,18 +3,26 @@ import ProductSchema from '../schemas/ProductSchema'
 import { PaginateResult } from 'mongoose'
 
 class ProductRepository {
+  // async create (payload: IProduct): Promise<IProductResponse> {
+  // return ProductSchema.create(payload)
+  // }
+
+  public async updateProduct (ProductId: string, Payload: IProduct) {
+    const findedProduct = findByID(ProductId)
+    return ProductSchema.findByIdAndUpdate(ProductId, Payload, { new: true })
+  } 
+
+  //Temporário até função getByID ser implementada por quem puxa-la
+  public async getProductByID (ProductId: string) {
+    return ProductSchema.findById(ProductId)
+  }
+
   async get (payload: any, page: any): Promise<PaginateResult<IProduct>> { // any
     return ProductSchema.paginate(payload,
       {
         page,
-        select: [
-          'name',
-          'category',
-          'currency',
-          'price'
-        ],
         customLabels: {
-          docs: 'Product',
+          docs: 'Products',
           page: 'currentPage',
           totalPages: 'totalPages',
           limit: 'pageSize',
@@ -32,3 +40,7 @@ class ProductRepository {
 }
 
 export default new ProductRepository()
+function findByID(ProductId: string): any {
+  throw new Error('Function not implemented.')
+}
+
