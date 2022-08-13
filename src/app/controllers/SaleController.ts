@@ -56,9 +56,9 @@ class SaleController {
     try {
       const _id = req.params.id
       const result = await SaleService.deleteSale(_id)
-      return res.status(200).json(result)
+      return res.status(204).json()
     } catch (error: any) {
-      return res.status(error.statusCode || 400).json({
+      return res.status(error.statusCode || 500).json({
         message: error.name,
         details: [
           { message: error.message }
