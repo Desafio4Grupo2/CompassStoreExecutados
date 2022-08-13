@@ -9,7 +9,7 @@ class ClientController {
 
       const result = await ClientService.get(body, page)
 
-      return res.status(201).json(result)
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error })
     }
@@ -17,17 +17,16 @@ class ClientController {
 
   public async getById (req: Request, res: Response): Promise<Response> {
     try {
-
       const id = req.params.id
-      const { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood } = req.body
-      const body = await ClientService.getClient(id, { name, cpf, birthday, email, cep, uf, city, address, number, complement, neighborhood })
-      return res.status(201).json(body)
 
+      const body = await ClientService.getById(id)
+
+      return res.status(200).json(body)
     } catch (error) {
-      return res.status(400).json({error})
+      return res.status(400).json({ error })
     }
   }
- 
+
   public async updateClient (req: Request, res: Response) {
     try {
       const _id = req.params.id

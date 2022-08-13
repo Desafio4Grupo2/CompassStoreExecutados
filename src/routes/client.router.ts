@@ -10,5 +10,4 @@ routes.get('/api/v1/client', ClientGetValidate, ClientController.get)
 routes.post('/api/v1/client', ClientCreateValidate, ClientController.create)
 routes.put('/api/v1/client/:id', ClientUpdateValidate, ClientController.updateClient)
 
-
 export default routes

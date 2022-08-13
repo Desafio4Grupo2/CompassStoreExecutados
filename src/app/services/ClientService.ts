@@ -20,12 +20,11 @@ class ClientService {
     return result
   }
 
+  public async getById (Id: any) {
+    const result = await ClientRepository.getById(Id)
 
-  public async getClient (Id: any, Payload: IClient) {
-    const result = await ClientRepository.getClient(Id, Payload)
     return result
   }
-
 
   async create (payload: IClient): Promise<IClientResponse> {
     try {
