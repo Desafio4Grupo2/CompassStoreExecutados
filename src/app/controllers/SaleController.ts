@@ -1,3 +1,4 @@
+import { ObjectId, Types } from 'mongoose';
 import SaleService from '../services/SaleService'
 import { Request, Response } from 'express'
 
@@ -40,6 +41,21 @@ class SaleController {
       const _id = req.params.id
       const body = req.body
       const result = await SaleService.update(_id, body)
+      return res.status(200).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 400).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async deleteSale (req: Request, res: Response) {
+    try {
+      const _id = req.params.id
+      const result = await SaleService.deleteSale(_id)
       return res.status(200).json(result)
     } catch (error: any) {
       return res.status(error.statusCode || 400).json({
