@@ -1,16 +1,16 @@
-import { Schema, Document } from 'mongoose'
+import { Schema } from 'mongoose'
 
 export interface IClient {
   name: string
   cpf: string
-  birthday: string
+  birthday: String
   email: string
   password: string
   cep: string
   uf: string
   city: string
   address: string
-  number: string
+  number: number
   complement: string
   neighborhood: string
 }
@@ -18,9 +18,9 @@ export interface IClient {
 export interface IClientResponse {
   name: string
   cpf: string
-  birthday: string
+  birthday: Date
   email: string
-  password: string
+  password?: string
   cep: string
   uf: string
   city: string
@@ -30,4 +30,18 @@ export interface IClientResponse {
   neighborhood: string
   _id: Schema.Types.ObjectId
   __v?: number
+}
+
+export interface IViaCepResponse {
+  cep: string,
+  logradouro: string,
+  complemento: string,
+  bairro: string,
+  localidade: string,
+  uf: string,
+  ibge: string,
+  gia: string,
+  ddd: string,
+  siafi: string,
+  erro?: string
 }
