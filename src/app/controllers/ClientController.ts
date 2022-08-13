@@ -1,26 +1,16 @@
-import { Request, Response } from 'express'
-
 import ClientService from '../services/ClientService'
 
+import { Request, Response } from 'express'
 class ClientController {
-  public async get (req: Request, res: Response): Promise<Response> {
+  public async delete (req: Request, res: Response): Promise<Response> {
     try {
-      const {
-        name,
-        cpf,
-        email,
-        cep,
-        uf,
-        city,
-        address,
-        number,
-        complement,
-        neighborhood
-      } = req.query
-      const result = await ClientService.get()
-      return res.status(201).json(result)
+      const _id = req.params.id
+
+      const request = ClientService.delete(_id)
+
+      return res.status(204).json(request)
     } catch (error) {
-      return res.status(500).json({ error })
+      return res.status(404).json({ error })
     }
   }
 }
