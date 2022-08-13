@@ -42,9 +42,13 @@ class ProductService {
     return result
   }
 
-  public async getProductByID (Id: any) {
-    const result = await ProductRepository.getProductByID(Id)
-    return result
+  public async getProductByID (Id: string) {
+    const result = await ProductRepository.getProductByID(Id)  
+    const findedClient = await ProductRepository.getProductByID(Id)
+    if (!findedClient) {
+      throw new NotFoundError('Product not found')
+    } 
+    return result;
   }
 }
 

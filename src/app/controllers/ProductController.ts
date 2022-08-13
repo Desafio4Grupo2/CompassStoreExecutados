@@ -50,23 +50,18 @@ class ProductController {
     }
   }
 
-  public async getProductId (req: Request, res: Response): Promise<Response> {
+  public async getProductByID (req: Request, res: Response): Promise<Response> {
     try {
       const id = req.params.id
       const body = await ProductService.getProductByID(id)
-      return res.status(201).json(body)
-    } catch (error) {
-      return res.status(400).json({ error })
-    }
-  }
-
-  public async getProductId (req: Request, res: Response): Promise<Response> {
-    try {
-      const id = req.params.id
-      const body = await ProductService.getProductByID(id)
-      return res.status(201).json(body)
-    } catch (error) {
-      return res.status(400).json({ error })
+      return res.status(200).json(body)
+    } catch (error: any) {
+      return res.status(error.statusCode || 400).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 }

@@ -7,7 +7,7 @@ const routes = Router()
 
 routes.post('/api/v1/product', ProductCreateValidate, ProductController.create)
 routes.put('/api/v1/product/:id', ProductUpdateValidation, ProductController.updateProduct)
-routes.get('/api/v1/product/:id', ProductController.getProductId)
+routes.get('/api/v1/product/:id', ProductController.getProductByID)
 routes.get('/api/v1/product', ProductController.get)
 
 
