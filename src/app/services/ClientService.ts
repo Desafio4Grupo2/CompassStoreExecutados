@@ -3,8 +3,8 @@ import { IClient, IClientResponse, IViaCepResponse } from '../interfaces/IClient
 import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
 import BadRequestError from '../errors/BadRequestError'
-import axios from 'axios'
 import NotFoundError from '../errors/NotFoundError'
+import getAddress from '../utils/viacep'
 
 class ClientService {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
@@ -15,11 +15,15 @@ class ClientService {
 
     const result = await ClientRepository.get(query, page || 1)
 
+    if (!result) throw new NotFoundError('Sale Not Found')
+
     return result
   }
 
   public async updateClient (ClientId: string, Payload: IClient) {
-    const findedClient = await ClientRepository.getClient(ClientId)
+    if (!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
+
+    const findedClient = await ClientRepository.getById(ClientId)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
     }
@@ -27,22 +31,22 @@ class ClientService {
     return result
   }
 
-  public async getClient (Id: any) {
-    const result = await ClientRepository.getClient(Id)
+  public async getById (Id: any) {
+    const result = await ClientRepository.getById(Id)
+
     return result
   }
 
   public async create (payload: IClient): Promise<IClientResponse> {
-    const { cep } = payload
+    const { cpf, email, cep } = payload
 
-    const viacepResponse: IViaCepResponse = await axios
-      .get(`https://viacep.com.br/ws/${cep}/json`)
-      .then((response) => {
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
+    const findedWithCpfClient = await ClientRepository.getByCpf(cpf)
+    if (findedWithCpfClient) throw new BadRequestError('Client with this cpf already exists')
+
+    const findedWithEmailClient = await ClientRepository.getByEmail(email)
+    if (findedWithEmailClient) throw new BadRequestError('Client with this email already exists')
+
+    const viacepResponse: IViaCepResponse = await getAddress(cep)
 
     if (viacepResponse.erro) throw new BadRequestError('Cep is not valid')
 
@@ -70,13 +74,13 @@ class ClientService {
     return result
   }
 
-  public async deleteClient (id: string) {
+  public async delete (id: string) {
     if(!Types.ObjectId.isValid(id)) throw new BadRequestError('Client Id is not valid')   
-    const findedClient = await ClientRepository.getClient(id)
+    const findedClient = await ClientRepository.getById(id)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
     } 
-    await ClientRepository.deleteClient(id);
+    await ClientRepository.delete(id);
     }
   }
 

@@ -4,10 +4,10 @@ import Joi from 'joi'
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = Joi.object({
-      name: Joi.string().optional().trim(),
-      category: Joi.string().optional().trim(),
-      currency: Joi.string().optional().trim(),
-      price: Joi.number().optional().greater(0)
+      name: Joi.string().required().trim(),
+      category: Joi.string().required().trim(),
+      currency: Joi.string().required().trim(),
+      price: Joi.number().required().greater(0)
     })
 
     const { error } = await schema.validate(req.body, { abortEarly: false })
