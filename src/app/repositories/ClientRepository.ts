@@ -47,6 +47,10 @@ class ClientRepository {
   public async create (payload: IClient): Promise<any> {
     return ClientSchema.create(payload)
   }
+
+  async delete (id: any): Promise<void> {
+    await ClientSchema.findByIdAndDelete(id)
+  }
 }
 
 export default new ClientRepository()

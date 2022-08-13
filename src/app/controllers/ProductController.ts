@@ -8,8 +8,8 @@ class ProductController {
       const { name, category, currency, price } = req.body
       const result = await ProductService.updateProduct(_id, { name, category, currency, price })
       return res.status(200).json(result)
-    } catch (error) {
-      return res.status(400).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode ||400).json({ error })
     }
   }
 
