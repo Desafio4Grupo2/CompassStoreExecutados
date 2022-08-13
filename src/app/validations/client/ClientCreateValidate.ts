@@ -89,7 +89,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({
       message: 'Bad Request Error',
       details: [
-        { message: error.details }
+        { message: error.message }
       ]
     })
   }

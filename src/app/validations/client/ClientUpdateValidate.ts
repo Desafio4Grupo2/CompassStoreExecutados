@@ -7,7 +7,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       name: Joi.string().optional().trim(),
       birthday: Joi.date().optional(),
       password: Joi.string().optional().trim().min(6),
-      cep: Joi.number().optional(),
+      cep: Joi.string().optional().trim().min(8).max(8),
       address: Joi.string().optional().trim(),
       number: Joi.number().optional(),
       complement: Joi.string().optional()
@@ -20,7 +20,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({
       message: 'Bad Request Error',
       details: [
-        { message: error.details }
+        { message: error.message }
       ]
     })
   }
