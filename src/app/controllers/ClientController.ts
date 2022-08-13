@@ -9,7 +9,7 @@ class ClientController {
 
       const result = await ClientService.get(body, page)
 
-      return res.status(201).json(result)
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({ error })
     }
@@ -18,8 +18,10 @@ class ClientController {
   public async getById (req: Request, res: Response): Promise<Response> {
     try {
       const id = req.params.id
-      const body = await ClientService.getClient(id)
-      return res.status(201).json(body)
+
+      const body = await ClientService.getById(id)
+
+      return res.status(200).json(body)
     } catch (error) {
       return res.status(400).json({ error })
     }
@@ -47,7 +49,7 @@ class ClientController {
   }
 
   public async delete (req: Request, res: Response): Promise<Response> {
-    try{
+    try {
       const _id = req.params.id
       const request = ClientService.delete(_id)
 

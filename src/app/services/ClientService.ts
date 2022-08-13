@@ -27,8 +27,9 @@ class ClientService {
     return result
   }
 
-  public async getClient (Id: any) {
-    const result = await ClientRepository.getClient(Id)
+  public async getById (Id: any) {
+    const result = await ClientRepository.getById(Id)
+
     return result
   }
 
