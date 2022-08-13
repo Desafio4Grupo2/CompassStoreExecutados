@@ -1,4 +1,4 @@
-import { PaginateResult, Types } from 'mongoose'
+import { ObjectId, PaginateResult, Types } from 'mongoose'
 import { ISale } from '../interfaces/ISale'
 import SaleRepository from '../repositories/SaleRepository'
 import ClientRepository from '../repositories/ClientRepository'
@@ -47,6 +47,18 @@ class SaleService {
 
     return result
   }
+
+  public async deleteSale (id: string) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Sale ID is not valid')
+
+    const result = await SaleRepository.deleteSale(id)
+
+    if(!result) throw new NotFoundError('Sale Not Found')
+
+    return result;
+  }
+
 }
+
 
 export default new SaleService()

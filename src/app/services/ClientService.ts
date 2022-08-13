@@ -46,10 +46,10 @@ class ClientService {
 
     const viacepResponse: IViaCepResponse = await axios
       .get(`https://viacep.com.br/ws/${cep}/json`)
-      .then((response) => {
+      .then((response: any) => {
         return response.data
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error.message)
       })
 
