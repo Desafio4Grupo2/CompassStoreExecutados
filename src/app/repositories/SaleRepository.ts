@@ -1,6 +1,6 @@
 import { ISale } from '../interfaces/ISale'
 import SaleSchema from '../schemas/SaleSchema'
-import { PaginateResult } from 'mongoose'
+import { PaginateResult, Types } from 'mongoose'
 import customLabels from '../utils/paginate'
 
 class SaleRepository {
@@ -14,6 +14,10 @@ class SaleRepository {
 
   public async update (id: string, Payload: ISale) {
     return SaleSchema.findByIdAndUpdate(id, Payload, { returnDocument: 'after', runValidators: true })
+  }
+
+  public async deleteSale (id: string) {
+    return SaleSchema.findByIdAndDelete(id)
   }
 }
 

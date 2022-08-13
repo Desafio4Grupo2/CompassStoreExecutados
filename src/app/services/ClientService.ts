@@ -1,4 +1,4 @@
-import { PaginateResult } from 'mongoose'
+import { PaginateResult, Types } from 'mongoose'
 import { IClient, IClientResponse, IViaCepResponse } from '../interfaces/IClient'
 import ClientRepository from '../repositories/ClientRepository'
 import bcrypt from 'bcryptjs'
@@ -21,6 +21,8 @@ class ClientService {
   }
 
   public async updateClient (ClientId: string, Payload: IClient) {
+    if(!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
+    
     const findedClient = await ClientRepository.getById(ClientId)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
@@ -46,10 +48,10 @@ class ClientService {
 
     const viacepResponse: IViaCepResponse = await axios
       .get(`https://viacep.com.br/ws/${cep}/json`)
-      .then((response) => {
+      .then((response: any) => {
         return response.data
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error.message)
       })
 
