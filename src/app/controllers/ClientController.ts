@@ -40,8 +40,8 @@ class ClientController {
   public async updateClient (req: Request, res: Response) {
     try {
       const _id = req.params.id
-      const { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood } = req.body
-      const result = await ClientService.updateClient(_id, { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood })
+      const payload: IClient = req.body
+      const result = await ClientService.updateClient(_id, payload)
       return res.status(200).json(result)
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({

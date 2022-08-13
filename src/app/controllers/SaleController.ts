@@ -1,4 +1,3 @@
-import { ObjectId, Types } from 'mongoose';
 import SaleService from '../services/SaleService'
 import { Request, Response } from 'express'
 
@@ -55,7 +54,7 @@ class SaleController {
   public async deleteSale (req: Request, res: Response) {
     try {
       const _id = req.params.id
-      const result = await SaleService.deleteSale(_id)
+      await SaleService.deleteSale(_id)
       return res.status(204).json()
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({

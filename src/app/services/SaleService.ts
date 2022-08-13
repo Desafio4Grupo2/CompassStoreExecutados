@@ -1,4 +1,4 @@
-import { ObjectId, PaginateResult, Types } from 'mongoose'
+import { PaginateResult, Types } from 'mongoose'
 import { ISale } from '../interfaces/ISale'
 import SaleRepository from '../repositories/SaleRepository'
 import ClientRepository from '../repositories/ClientRepository'
@@ -53,12 +53,10 @@ class SaleService {
 
     const result = await SaleRepository.deleteSale(id)
 
-    if(!result) throw new NotFoundError('Sale Not Found')
+    if (!result) throw new NotFoundError('Sale Not Found')
 
-    return result;
+    return result
   }
-
 }
-
 
 export default new SaleService()
