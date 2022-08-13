@@ -8,8 +8,8 @@ class ProductService {
   public async updateProduct (ProductId: string, Payload: IProduct) {
     if(!Types.ObjectId.isValid(ProductId)) throw new BadRequestError('ProductId is not valid')
     
-    const findedProduct = await ProductRepository.getProductByID(ProductId)
-    if (!findedProduct) {
+    const foundProduct = await ProductRepository.getProductByID(ProductId)
+    if (!foundProduct) {
       throw new NotFoundError('Product not found')
     }
     const result = await ProductRepository.updateProduct(ProductId, Payload)
