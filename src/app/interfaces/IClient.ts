@@ -1,6 +1,6 @@
 import { Schema, Document } from 'mongoose'
 
-export interface IClient extends Document {
+export interface IClient {
   name: string
   cpf: string
   birthday: string
@@ -15,7 +15,7 @@ export interface IClient extends Document {
   neighborhood: string
 }
 
-export interface IClientResponse extends Document {
+export interface IClientResponse {
   name: string
   cpf: string
   birthday: string
