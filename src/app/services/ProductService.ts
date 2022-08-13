@@ -1,10 +1,13 @@
 import NotFoundError from '../errors/NotFoundError'
-import { PaginateResult } from 'mongoose'
+import { PaginateResult, Types } from 'mongoose'
 import { IProduct } from '../interfaces/IProduct'
 import ProductRepository from '../repositories/ProductRepository'
+import BadRequestError from '../errors/BadRequestError'
 
 class ProductService {
-  public async updateProduct (ProductId: any, Payload: IProduct) {
+  public async updateProduct (ProductId: string, Payload: IProduct) {
+    if(!Types.ObjectId.isValid(ProductId)) throw new BadRequestError('ProductId is not valid')
+    
     const findedProduct = await ProductRepository.getProductByID(ProductId)
     if (!findedProduct) {
       throw new NotFoundError('Product not found')
