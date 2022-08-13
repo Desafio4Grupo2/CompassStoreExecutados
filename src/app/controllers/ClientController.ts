@@ -73,7 +73,7 @@ class ClientController {
       const _id = req.params.id
       const request = ClientService.delete(_id)
 
-      return res.status(204).json(request)
+      return res.status(204).json({message: `Client ${_id} successfully deleted`})
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
         message: error.name,

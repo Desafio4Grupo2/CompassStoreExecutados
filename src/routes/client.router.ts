@@ -9,6 +9,6 @@ routes.get('/api/v1/client/:id', ClientController.getById)
 routes.get('/api/v1/client', ClientController.get)
 routes.post('/api/v1/client', ClientCreateValidate, ClientController.create)
 routes.put('/api/v1/client/:id', ClientUpdateValidate, ClientController.updateClient)
-routes.delete('/api/v1/client/:id', ClientController.delete)
+routes.delete('/api/v1/client/:id', ClientController.deleteClient)
 
 export default routes

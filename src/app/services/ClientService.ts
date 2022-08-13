@@ -74,10 +74,14 @@ class ClientService {
     return result
   }
 
-  async delete (id: string) {
-    const result = await ClientRepository.delete(id)
-    return result
+  public async delete (id: string) {
+    if(!Types.ObjectId.isValid(id)) throw new BadRequestError('Client Id is not valid')   
+    const findedClient = await ClientRepository.getById(id)
+    if (!findedClient) {
+      throw new NotFoundError('Client not found')
+    } 
+    await ClientRepository.delete(id);
+    }
   }
-}
 
 export default new ClientService()
