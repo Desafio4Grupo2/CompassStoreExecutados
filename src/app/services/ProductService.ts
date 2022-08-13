@@ -32,6 +32,12 @@ class ProductService {
 
     return result
   }
+
+  public async create (payload: IProduct): Promise<IProduct> {
+    const result = await ProductRepository.create(payload)
+
+    return result
+  }
 }
 
 export default new ProductService()

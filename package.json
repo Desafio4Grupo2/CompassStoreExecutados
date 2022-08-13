@@ -1,5 +1,5 @@
 {
-  "name": "arquitetura-node-typescript",
+  "name": "compass-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,39 @@
     "prepare": "husky install",
     "test": ""
   },
+  "contributors": [
+    {
+      "name": "Antonio Ribeiro de Carvalho",
+      "github": "https://github.com/AntonioRdC"
+    },
+    {
+      "name": "Carlos Henrique Dias Bilby",
+      "github": "https://github.com/Bilbyc"
+    },
+    {
+      "name": "Rafael Henrique Menegon",
+      "github": "https://github.com/devrafamenegon"
+    },
+    {
+      "name": "Renan Carneiro Costa",
+      "github": "https://github.com/renancarneiro"
+    },
+    {
+      "name": "Vitoria Stefany Batista da Silva",
+      "github": "https://github.com/VitoriaStefany"
+    }
+    
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Desafio4Grupo2/CompassStoreExecutados.git"
+  },
+  "keywords": ["compass", "store", "nodejs", "typescript", "express", "mongodb", "mongoose"],
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Desafio4Grupo2/CompassStoreExecutados/issues"
+  },
+  "homepage": "https://github.com/Desafio4Grupo2/CompassStoreExecutados",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
