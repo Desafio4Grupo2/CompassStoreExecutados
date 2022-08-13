@@ -3,6 +3,9 @@ import Joi from 'joi'
 
 const isValidBirthday = (value: string, helpers: any) => { // any
   const birthday = value.trim()
+  const isValidDate = birthday.match(/^\d{2}\/\d{2}\/\d{4}$/)
+  if (!isValidDate) return helpers.message('Birthday format is not valid (DD/MM/YYYY)')
+
   const date = birthday.split('/')
 
   const numberday = parseInt(date[0])
