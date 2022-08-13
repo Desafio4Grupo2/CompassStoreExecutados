@@ -15,11 +15,13 @@ class ClientService {
 
     const result = await ClientRepository.get(query, page || 1)
 
+    if (!result) throw new NotFoundError('Sale Not Found')
+
     return result
   }
 
   public async updateClient (ClientId: string, Payload: IClient) {
-    const findedClient = await ClientRepository.getClient(ClientId)
+    const findedClient = await ClientRepository.getById(ClientId)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
     }
@@ -27,8 +29,9 @@ class ClientService {
     return result
   }
 
-  public async getClient (Id: any) {
-    const result = await ClientRepository.getClient(Id)
+  public async getById (Id: any) {
+    const result = await ClientRepository.getById(Id)
+
     return result
   }
 
@@ -73,6 +76,11 @@ class ClientService {
 
     result.cpf = result.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
 
+    return result
+  }
+
+  async delete (id: string) {
+    const result = await ClientRepository.delete(id)
     return result
   }
 }

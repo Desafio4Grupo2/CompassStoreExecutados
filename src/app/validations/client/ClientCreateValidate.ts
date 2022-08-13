@@ -85,7 +85,12 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     const { error } = await schema.validate(req.body, { abortEarly: true })
     if (error) throw error.message
     return next()
-  } catch (error) {
-    return res.status(400).json(error)
+  } catch (error: any) {
+    return res.status(400).json({
+      message: 'Bad Request Error',
+      details: [
+        { message: error.details }
+      ]
+    })
   }
 }

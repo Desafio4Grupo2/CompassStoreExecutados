@@ -9,19 +9,31 @@ class ClientController {
 
       const result = await ClientService.get(body, page)
 
-      return res.status(201).json(result)
-    } catch (error) {
-      return res.status(400).json({ error })
+      return res.status(200).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
   public async getById (req: Request, res: Response): Promise<Response> {
     try {
       const id = req.params.id
-      const body = await ClientService.getClient(id)
-      return res.status(201).json(body)
-    } catch (error) {
-      return res.status(400).json({ error })
+
+      const body = await ClientService.getById(id)
+
+      return res.status(200).json(body)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -32,7 +44,12 @@ class ClientController {
       const result = await ClientService.updateClient(_id, { name, cpf, birthday, email, password, cep, uf, city, address, number, complement, neighborhood })
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 
@@ -42,7 +59,28 @@ class ClientController {
       const result = await ClientService.create(payload)
       return res.status(201).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 500).json({ message: error.message, error })
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async delete (req: Request, res: Response): Promise<Response> {
+    try {
+      const _id = req.params.id
+      const request = ClientService.delete(_id)
+
+      return res.status(204).json(request)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 }

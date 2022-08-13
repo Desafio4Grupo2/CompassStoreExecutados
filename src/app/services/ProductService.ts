@@ -4,7 +4,6 @@ import { IProduct } from '../interfaces/IProduct'
 import ProductRepository from '../repositories/ProductRepository'
 
 class ProductService {
-
   public async updateProduct (ProductId: any, Payload: IProduct) {
     const findedProduct = await ProductRepository.getProductByID(ProductId)
     if (!findedProduct) {
