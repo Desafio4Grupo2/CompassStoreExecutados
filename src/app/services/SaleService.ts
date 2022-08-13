@@ -1,7 +1,9 @@
-import { PaginateResult } from 'mongoose'
+import { PaginateResult, Types } from 'mongoose'
 import { ISale } from '../interfaces/ISale'
 import SaleRepository from '../repositories/SaleRepository'
 import ClientRepository from '../repositories/ClientRepository'
+import NotFoundError from '../errors/NotFoundError'
+import BadRequestError from '../errors/BadRequestError'
 
 class SaleService {
   public async get (payload: any, page: any): Promise<PaginateResult<ISale>> { // any
@@ -11,7 +13,6 @@ class SaleService {
         throw new Error('Client não existe')
       }
     }
-    console.log(payload)
     const query: {[key:string]: object | boolean} = {}
     Object.keys(payload).forEach(key => {
       if (key === 'client') {
@@ -20,8 +21,19 @@ class SaleService {
 
       query[key] = { $regex: payload[key] }
     })
-    console.log(payload)
     const result = await SaleRepository.get(query, page || 1)
+
+    if (!result) throw new NotFoundError('Sale Not Found')
+
+    return result
+  }
+
+  public async getById (Id: string) {
+    if (!Types.ObjectId.isValid(Id)) throw new BadRequestError('Id not valid')
+
+    const result = await SaleRepository.getById(Id)
+
+    if (!result) throw new NotFoundError('Sale Not Found')
 
     return result
   }

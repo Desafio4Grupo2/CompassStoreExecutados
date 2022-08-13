@@ -9,7 +9,6 @@ class ProductRepository {
   // }
 
   public async updateProduct (ProductId: string, Payload: IProduct) {
-    const findedProduct = findByID(ProductId)
     return ProductSchema.findByIdAndUpdate(ProductId, Payload, { new: true })
   }
 
@@ -24,6 +23,3 @@ class ProductRepository {
 }
 
 export default new ProductRepository()
-function findByID (ProductId: string): any {
-  throw new Error('Function not implemented.')
-}

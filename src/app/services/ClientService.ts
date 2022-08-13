@@ -15,6 +15,8 @@ class ClientService {
 
     const result = await ClientRepository.get(query, page || 1)
 
+    if (!result) throw new NotFoundError('Sale Not Found')
+
     return result
   }
 

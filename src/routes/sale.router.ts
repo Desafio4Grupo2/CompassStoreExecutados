@@ -7,6 +7,7 @@ const routes = Router()
 
 // routes.post('api/v1/sale', createValidation, SaleController.post)
 routes.get('/api/v1/sale', SaleController.get)
+routes.get('/api/v1/sale/:id', SaleController.getById)
 // routes.put('/api/v1/sale/:id', updateValidation, SaleController.put)
 // routes.delete('/api/v1/sale/:id', SaleController.delete)
 

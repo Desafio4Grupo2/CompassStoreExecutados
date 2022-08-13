@@ -10,8 +10,8 @@ class ClientController {
       const result = await ClientService.get(body, page)
 
       return res.status(200).json(result)
-    } catch (error) {
-      return res.status(400).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ error })
     }
   }
 
@@ -22,8 +22,8 @@ class ClientController {
       const body = await ClientService.getById(id)
 
       return res.status(200).json(body)
-    } catch (error) {
-      return res.status(400).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ error })
     }
   }
 
@@ -54,8 +54,8 @@ class ClientController {
       const request = ClientService.delete(_id)
 
       return res.status(204).json(request)
-    } catch (error) {
-      return res.status(404).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({ error })
     }
   }
 }
