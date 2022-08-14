@@ -1,3 +1,4 @@
+import { ISale } from './../interfaces/ISale'
 import SaleService from '../services/SaleService'
 import { Request, Response } from 'express'
 
@@ -56,6 +57,21 @@ class SaleController {
       const _id = req.params.id
       await SaleService.deleteSale(_id)
       return res.status(204).json()
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async createSale (req: Request, res: Response): Promise<Response> {
+    try {
+      const payload: ISale = req.body
+      const result = await SaleService.createSale(payload)
+      return res.status(201).json(result)
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
         message: error.name,
