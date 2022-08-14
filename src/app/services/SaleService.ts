@@ -1,9 +1,10 @@
 import { PaginateResult, Types } from 'mongoose'
-import { ISale } from '../interfaces/ISale'
+import { ISale, ISaleItem, ISaleResponse } from '../interfaces/ISale'
 import SaleRepository from '../repositories/SaleRepository'
 import ClientRepository from '../repositories/ClientRepository'
 import NotFoundError from '../errors/NotFoundError'
 import BadRequestError from '../errors/BadRequestError'
+import ProductRepository from '../repositories/ProductRepository'
 
 class SaleService {
   public async get (payload: any, page: any): Promise<PaginateResult<ISale>> { // any
@@ -54,6 +55,23 @@ class SaleService {
     const result = await SaleRepository.deleteSale(id)
 
     if (!result) throw new NotFoundError('Sale Not Found')
+
+    return result
+  }
+
+  public async createSale (payload: ISale): Promise<ISaleResponse> {
+    payload.items.forEach(async (item: ISaleItem) => {
+      const productId = new Types.ObjectId(item.product)
+      const product = await ProductRepository.getProductByID(productId)
+
+      if (!product) {
+        throw new Error('Product not found')
+      }
+
+      item.unitValue = product.price
+    })
+
+    const result = await SaleRepository.createSale(payload)
 
     return result
   }

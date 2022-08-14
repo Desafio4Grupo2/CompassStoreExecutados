@@ -19,6 +19,10 @@ class SaleRepository {
   public async deleteSale (id: string) {
     return SaleSchema.findByIdAndDelete(id)
   }
+
+  public async createSale (payload: ISale) {
+    return SaleSchema.create(payload)
+  }
 }
 
 export default new SaleRepository()

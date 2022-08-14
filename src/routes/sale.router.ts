@@ -5,7 +5,7 @@ import updateValidation from '../app/validations/sale/SaleUpdateValidate'
 
 const routes = Router()
 
-// routes.post('api/v1/sale', createValidation, SaleController.post)
+routes.post('/api/v1/sale', SaleController.createSale)
 routes.get('/api/v1/sale', SaleController.get)
 routes.get('/api/v1/sale/:id', SaleController.getById)
 routes.put('/api/v1/sale/:id', updateValidation, SaleController.update)
