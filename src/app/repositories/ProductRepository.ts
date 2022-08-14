@@ -20,6 +20,9 @@ class ProductRepository {
   async get (payload: any, page: any): Promise<PaginateResult<IProduct>> { // any
     return ProductSchema.paginate(payload, { page, customLabels })
   }
+  public async deleteProduct (id: string): Promise<void> {
+    await ProductSchema.findByIdAndDelete(id)
+  }
 }
 
 export default new ProductRepository()
