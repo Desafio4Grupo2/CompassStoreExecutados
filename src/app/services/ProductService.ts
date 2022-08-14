@@ -3,6 +3,7 @@ import { PaginateResult, Types } from 'mongoose'
 import { IProduct } from '../interfaces/IProduct'
 import ProductRepository from '../repositories/ProductRepository'
 import BadRequestError from '../errors/BadRequestError'
+import { string } from 'joi'
 
 class ProductService {
   public async updateProduct (ProductId: string, Payload: IProduct) {
@@ -38,9 +39,17 @@ class ProductService {
 
   public async create (payload: IProduct): Promise<IProduct> {
     const result = await ProductRepository.create(payload)
-
     return result
   }
+
+  public async getProductByID (Id: string) {
+    const result = await ProductRepository.getProductByID(Id)  
+    const findedClient = await ProductRepository.getProductByID(Id)
+    if (!findedClient) {
+      throw new NotFoundError('Product not found')
+    } 
+    return result;
+
   public async deleteProduct (id: string) {
     if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Product Id is not valid')
     const findedProduct = await ProductRepository.getProductByID(id)
@@ -48,6 +57,7 @@ class ProductService {
       throw new NotFoundError('Product not found')
     }
     await ProductRepository.deleteProduct(id)
+
   }
 }
 
