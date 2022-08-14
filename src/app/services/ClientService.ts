@@ -21,16 +21,16 @@ class ClientService {
   }
 
   public async updateClient (ClientId: string, payload: IClient) {
-    const { cep } = payload
-    const viacepResponse: IViaCepResponse = await getAddress(cep)
+    if (payload.cep !== undefined) {
+      const viacepResponse: IViaCepResponse = await getAddress(payload.cep)
+      const { uf, localidade, logradouro, complemento, bairro } = viacepResponse
 
-    const { uf, localidade, logradouro, complemento, bairro } = viacepResponse
-
-    payload.uf = uf
-    payload.city = localidade
-    payload.address = logradouro
-    payload.neighborhood = bairro
-    payload.complement = complemento
+      payload.uf = uf
+      payload.city = localidade
+      payload.address = logradouro
+      payload.neighborhood = bairro
+      payload.complement = complemento
+    }
 
     if (!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
 
