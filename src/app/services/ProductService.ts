@@ -41,6 +41,14 @@ class ProductService {
 
     return result
   }
+  public async deleteProduct (id: string) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Product Id is not valid')
+    const findedProduct = await ProductRepository.getProductByID(id)
+    if (!findedProduct) {
+      throw new NotFoundError('Product not found')
+    }
+    await ProductRepository.deleteProduct(id)
+  }
 }
 
 export default new ProductService()
