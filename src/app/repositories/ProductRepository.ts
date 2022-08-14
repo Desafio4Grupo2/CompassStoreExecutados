@@ -4,6 +4,10 @@ import { PaginateResult } from 'mongoose'
 import customLabels from '../utils/paginate'
 
 class ProductRepository {
+  async get (payload: any, page: any): Promise<PaginateResult<IProduct>> {
+    return ProductSchema.paginate(payload, { page, customLabels })
+  }
+
   async create (payload: IProduct) {
     return ProductSchema.create(payload)
   }
@@ -12,15 +16,11 @@ class ProductRepository {
     return ProductSchema.findByIdAndUpdate(ProductId, Payload, { new: true })
   }
 
-  // Temporário até função getByID ser implementada por quem puxa-la
-  public async getProductByID (ProductId: string) {
-    return ProductSchema.findById(ProductId)
+  public async getById (id: string) {
+    return ProductSchema.findById(id)
   }
 
-  async get (payload: any, page: any): Promise<PaginateResult<IProduct>> { // any
-    return ProductSchema.paginate(payload, { page, customLabels })
-  }
-  public async deleteProduct (id: string): Promise<void> {
+  public async delete (id: string): Promise<void> {
     await ProductSchema.findByIdAndDelete(id)
   }
 }
