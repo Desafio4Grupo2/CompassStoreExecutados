@@ -8,7 +8,7 @@ class ClientRepository {
     return ClientSchema.paginate(payload, { page, select: ['-password', '-birthday'], customLabels })
   }
 
-  public async updateClient (ClientId: string, Payload: IClient) {
+  public async updateClient (ClientId: string, Payload: IClient): Promise<any> {
     return ClientSchema.findByIdAndUpdate(ClientId, Payload, { new: true }).select('-password')
   }
 

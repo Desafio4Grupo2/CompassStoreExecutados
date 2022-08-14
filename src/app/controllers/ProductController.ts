@@ -35,6 +35,22 @@ class ProductController {
     }
   }
 
+  public async deleteProduct (req: Request, res: Response): Promise<Response> {
+    try {
+      const _id = req.params.id
+      ProductService.deleteProduct(_id)
+      return res.status(204).json({ message: `Product ${_id} successfully deleted` })
+      
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
   public async create (req: Request, res: Response): Promise<Response> {
     try {
       const payload: IProduct = req.body
