@@ -20,7 +20,13 @@ class ClientService {
     return result
   }
 
-  public async updateClient (ClientId: string, payload: IClient) {
+  public async getById (Id: any) {
+    const result = await ClientRepository.getById(Id)
+
+    return result
+  }
+
+  public async update (id: string, payload: IClient) {
     if (payload.cep !== undefined) {
       const viacepResponse: IViaCepResponse = await getAddress(payload.cep)
       const { uf, localidade, logradouro, complemento, bairro } = viacepResponse
@@ -32,19 +38,13 @@ class ClientService {
       payload.complement = complemento
     }
 
-    if (!Types.ObjectId.isValid(ClientId)) throw new BadRequestError('ClientId is not valid')
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('ClientId is not valid')
 
-    const findedClient = await ClientRepository.getById(ClientId)
+    const findedClient = await ClientRepository.getById(id)
     if (!findedClient) {
       throw new NotFoundError('Client not found')
     }
-    const result = await ClientRepository.updateClient(ClientId, payload)
-    return result
-  }
-
-  public async getById (Id: any) {
-    const result = await ClientRepository.getById(Id)
-
+    const result = await ClientRepository.update(id, payload)
     return result
   }
 

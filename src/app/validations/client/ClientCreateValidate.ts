@@ -28,60 +28,20 @@ const isValidBirthday = (value: string, helpers: any) => { // any
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = Joi.object({
-      _id: Joi.string()
-        .forbidden(),
-      name: Joi.string()
-        .required()
-        .min(3)
-        .max(100),
-      cpf: Joi.string()
-        .required()
-        .min(11)
-        .max(11)
-        .pattern(/^[0-9]+$/),
-      birthday: Joi.string()
-        .custom(isValidBirthday)
-        .required(),
-      email: Joi.string()
-        .email()
-        .required(),
-      password: Joi.string()
-        .required()
-        .min(6)
-        .max(20),
-      cep: Joi.string()
-        .required()
-        .min(8)
-        .max(8)
-        .pattern(/^[0-9]+$/),
-      uf: Joi.string()
-        .optional()
-        .min(2)
-        .max(2)
-        .pattern(/^[a-zA-Z]+$/),
-      city: Joi.string()
-        .optional()
-        .min(3)
-        .max(50)
-        .pattern(/^[a-zA-Z]+$/),
-      address: Joi.string()
-        .optional()
-        .min(3)
-        .max(50)
-        .pattern(/^[a-zA-Z]+$/),
-      number: Joi.string()
-        .required()
-        .min(1)
-        .max(10),
-      complement: Joi.string()
-        .optional()
-        .min(3)
-        .max(50),
-      neighborhood: Joi.string()
-        .optional()
-        .min(3)
-        .max(50)
+      name: Joi.string().required().min(3).max(100),
+      cpf: Joi.string().required().min(11).max(11).pattern(/^[0-9]+$/),
+      birthday: Joi.string().custom(isValidBirthday).required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required().min(6).max(20),
+      cep: Joi.string().required().min(8).max(8).pattern(/^[0-9]+$/),
+      uf: Joi.string().optional().min(2).max(2).pattern(/^[a-zA-Z]+$/),
+      city: Joi.string().optional().min(3).max(50).pattern(/^[a-zA-Z]+$/),
+      address: Joi.string().optional().min(3).max(50).pattern(/^[a-zA-Z]+$/),
+      number: Joi.string().required().min(1).max(10),
+      complement: Joi.string().optional().min(3).max(50),
+      neighborhood: Joi.string().optional().min(3).max(50)
     })
+
     const { error } = await schema.validate(req.body, { abortEarly: true })
     if (error) throw error.message
     return next()

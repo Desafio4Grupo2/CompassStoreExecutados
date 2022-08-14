@@ -37,12 +37,11 @@ class ClientController {
     }
   }
 
-  public async updateClient (req: Request, res: Response) {
+  public async create (req: Request, res: Response): Promise<Response> {
     try {
-      const _id = req.params.id
       const payload: IClient = req.body
-      const result = await ClientService.updateClient(_id, payload)
-      return res.status(200).json(result)
+      const result = await ClientService.create(payload)
+      return res.status(201).json(result)
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
         message: error.name,
@@ -53,11 +52,12 @@ class ClientController {
     }
   }
 
-  public async create (req: Request, res: Response): Promise<Response> {
+  public async update (req: Request, res: Response) {
     try {
+      const _id = req.params.id
       const payload: IClient = req.body
-      const result = await ClientService.create(payload)
-      return res.status(201).json(result)
+      const result = await ClientService.update(_id, payload)
+      return res.status(200).json(result)
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
         message: error.name,

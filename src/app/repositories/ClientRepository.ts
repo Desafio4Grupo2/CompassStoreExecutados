@@ -8,16 +8,8 @@ class ClientRepository {
     return ClientSchema.paginate(payload, { page, select: ['-password', '-birthday'], customLabels })
   }
 
-  public async updateClient (ClientId: string, Payload: IClient): Promise<any> {
-    return ClientSchema.findByIdAndUpdate(ClientId, Payload, { new: true }).select('-password')
-  }
-
-  public async getById (ClientId: string) {
-    return ClientSchema.findById(ClientId).select('-password')
-  }
-
-  public async create (payload: IClient): Promise<any> {
-    return ClientSchema.create(payload)
+  public async getById (id: string) {
+    return ClientSchema.findById(id).select('-password')
   }
 
   public async getByCpf (cpf: string) {
@@ -26,6 +18,14 @@ class ClientRepository {
 
   public async getByEmail (email: string) {
     return ClientSchema.findOne({ email })
+  }
+
+  public async create (payload: IClient): Promise<any> {
+    return ClientSchema.create(payload)
+  }
+
+  public async update (id: string, payload: IClient): Promise<any> {
+    return ClientSchema.findByIdAndUpdate(id, payload, { new: true }).select('-password')
   }
 
   async delete (id: string): Promise<void> {
