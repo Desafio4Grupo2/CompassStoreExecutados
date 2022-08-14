@@ -33,3 +33,7 @@ export interface ISaleItem {
   qtd: number
   unitValue: number
 }
+
+export interface IAwesomeApiResponse {
+  bid: number
+}

@@ -10,7 +10,8 @@ const schema = new Schema<ISale>({
   items: [{
     product: { type: Schema.Types.ObjectId, ref: 'Product' },
     qtd: { type: Number, required: true },
-    unitValue: { type: Number }
+    unitValue: { type: Number, required: true },
+    _id: false
   }],
   total: { type: Number, required: true },
   totalClient: { type: Number, required: true }

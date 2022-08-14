@@ -1,10 +1,11 @@
 import { PaginateResult, Types } from 'mongoose'
-import { ISale, ISaleItem, ISaleResponse } from '../interfaces/ISale'
+import { ISale } from '../interfaces/ISale'
 import SaleRepository from '../repositories/SaleRepository'
 import ClientRepository from '../repositories/ClientRepository'
 import NotFoundError from '../errors/NotFoundError'
 import BadRequestError from '../errors/BadRequestError'
 import ProductRepository from '../repositories/ProductRepository'
+import getBid from '../utils/getBid'
 
 class SaleService {
   public async get (payload: any, page: any): Promise<PaginateResult<ISale>> { // any
@@ -59,19 +60,29 @@ class SaleService {
     return result
   }
 
-  public async createSale (payload: ISale): Promise<ISaleResponse> {
-    payload.items.forEach(async (item: ISaleItem) => {
-      const productId = new Types.ObjectId(item.product)
-      const product = await ProductRepository.getProductByID(productId)
+  public async createSale (payload: ISale): Promise<any> {
+    const { clientCurrency } = payload
+    payload.total = 0
+    payload.totalClient = 0
+
+    for (const item of payload.items) {
+      const id = item.product.toString()
+      const product = await ProductRepository.getProductByID(id)
 
       if (!product) {
-        throw new Error('Product not found')
+        throw new BadRequestError('Product not found')
       }
 
       item.unitValue = product.price
-    })
+      payload.total += item.qtd * item.unitValue
+    }
+
+    const bid = await getBid(clientCurrency)
+    payload.totalClient = bid * payload.total
 
     const result = await SaleRepository.createSale(payload)
+
+    if (!result) throw new BadRequestError('Sale not created')
 
     return result
   }
