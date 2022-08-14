@@ -10,7 +10,7 @@ class SaleController {
       const result = await SaleService.get(body, page)
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 400).json({
+      return res.status(error.statusCode || 500).json({
         message: error.name,
         details: [
           { message: error.message }
@@ -27,7 +27,22 @@ class SaleController {
 
       return res.status(200).json(body)
     } catch (error: any) {
-      return res.status(error.statusCode || 400).json({
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async create (req: Request, res: Response): Promise<Response> {
+    try {
+      const payload: ISale = req.body
+      const result = await SaleService.create(payload)
+      return res.status(201).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
         message: error.name,
         details: [
           { message: error.message }
@@ -43,21 +58,6 @@ class SaleController {
       const result = await SaleService.update(_id, body)
       return res.status(200).json(result)
     } catch (error: any) {
-      return res.status(error.statusCode || 400).json({
-        message: error.name,
-        details: [
-          { message: error.message }
-        ]
-      })
-    }
-  }
-
-  public async deleteSale (req: Request, res: Response) {
-    try {
-      const _id = req.params.id
-      await SaleService.deleteSale(_id)
-      return res.status(204).json()
-    } catch (error: any) {
       return res.status(error.statusCode || 500).json({
         message: error.name,
         details: [
@@ -67,11 +67,11 @@ class SaleController {
     }
   }
 
-  public async createSale (req: Request, res: Response): Promise<Response> {
+  public async delete (req: Request, res: Response) {
     try {
-      const payload: ISale = req.body
-      const result = await SaleService.createSale(payload)
-      return res.status(201).json(result)
+      const _id = req.params.id
+      await SaleService.delete(_id)
+      return res.status(204).json()
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
         message: error.name,

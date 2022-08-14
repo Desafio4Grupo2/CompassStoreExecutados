@@ -5,10 +5,10 @@ import updateValidation from '../app/validations/sale/SaleUpdateValidate'
 
 const routes = Router()
 
-routes.post('/api/v1/sale', SaleCreateValidation, SaleController.createSale)
 routes.get('/api/v1/sale', SaleController.get)
 routes.get('/api/v1/sale/:id', SaleController.getById)
+routes.post('/api/v1/sale', SaleCreateValidation, SaleController.create)
 routes.put('/api/v1/sale/:id', updateValidation, SaleController.update)
-routes.delete('/api/v1/sale/:id', SaleController.deleteSale)
+routes.delete('/api/v1/sale/:id', SaleController.delete)
 
 export default routes

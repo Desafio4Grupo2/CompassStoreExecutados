@@ -12,16 +12,16 @@ class SaleRepository {
     return SaleSchema.findById(ClientId)
   }
 
+  public async create (payload: ISale) {
+    return SaleSchema.create(payload)
+  }
+
   public async update (id: string, Payload: ISale) {
     return SaleSchema.findByIdAndUpdate(id, Payload, { returnDocument: 'after', runValidators: true })
   }
 
-  public async deleteSale (id: string) {
+  public async delete (id: string) {
     return SaleSchema.findByIdAndDelete(id)
-  }
-
-  public async createSale (payload: ISale) {
-    return SaleSchema.create(payload)
   }
 }
 

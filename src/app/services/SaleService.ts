@@ -40,37 +40,17 @@ class SaleService {
     return result
   }
 
-  public async update (id: string, Payload: ISale) {
-    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Id not valid')
-
-    const result = await SaleRepository.update(id, Payload)
-
-    if (!result) throw new NotFoundError('Sale Not Found')
-
-    return result
-  }
-
-  public async deleteSale (id: string) {
-    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Sale ID is not valid')
-
-    const result = await SaleRepository.deleteSale(id)
-
-    if (!result) throw new NotFoundError('Sale Not Found')
-
-    return result
-  }
-
-  public async createSale (payload: ISale): Promise<any> {
+  public async create (payload: ISale): Promise<any> {
     const { clientCurrency } = payload
     payload.total = 0
     payload.totalClient = 0
 
     for (const item of payload.items) {
       const id = item.product.toString()
-      const product = await ProductRepository.getProductByID(id)
+      const product = await ProductRepository.getById(id)
 
       if (!product) {
-        throw new BadRequestError('Product not found')
+        throw new NotFoundError('Product not found')
       }
 
       item.unitValue = product.price
@@ -80,9 +60,29 @@ class SaleService {
     const bid = await getBid(clientCurrency)
     payload.totalClient = bid * payload.total
 
-    const result = await SaleRepository.createSale(payload)
+    const result = await SaleRepository.create(payload)
 
     if (!result) throw new BadRequestError('Sale not created')
+
+    return result
+  }
+
+  public async update (id: string, Payload: ISale) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Id not valid')
+
+    const result = await SaleRepository.update(id, Payload)
+
+    if (!result) throw new BadRequestError('Sale Not Updated')
+
+    return result
+  }
+
+  public async delete (id: string) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Sale ID is not valid')
+
+    const result = await SaleRepository.delete(id)
+
+    if (!result) throw new BadRequestError('Sale Not Deleted')
 
     return result
   }
