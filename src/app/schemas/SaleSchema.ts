@@ -8,9 +8,10 @@ const schema = new Schema<ISale>({
   clientCurrency: { type: String, required: true },
   date: { type: String, required: true },
   items: [{
-    product: { type: String, required: true },
+    product: { type: Schema.Types.ObjectId, ref: 'Product' },
     qtd: { type: Number, required: true },
-    unitValue: { type: Number, required: true }
+    unitValue: { type: Number, required: true },
+    _id: false
   }],
   total: { type: Number, required: true },
   totalClient: { type: Number, required: true }
