@@ -51,7 +51,7 @@ class SaleController {
     }
   }
 
-  public async update (req: Request, res: Response) {
+  public async update (req: Request, res: Response): Promise<Response> {
     try {
       const _id = req.params.id
       const body = req.body
@@ -67,7 +67,7 @@ class SaleController {
     }
   }
 
-  public async delete (req: Request, res: Response) {
+  public async delete (req: Request, res: Response): Promise<Response> {
     try {
       const _id = req.params.id
       await SaleService.delete(_id)

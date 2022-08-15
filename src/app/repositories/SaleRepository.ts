@@ -8,8 +8,12 @@ class SaleRepository {
     return SaleSchema.paginate(payload, { page, customLabels })
   }
 
-  public async getById (ClientId: string) {
-    return SaleSchema.findById(ClientId)
+  public async getById (id: string) {
+    return SaleSchema.findById(id)
+  }
+
+  public async getByClient (clientId: string) {
+    return SaleSchema.find({ client: clientId })
   }
 
   public async create (payload: ISale) {
