@@ -6,6 +6,6 @@ services:
     ports:
       - "${API_EXPOSED_PORT}:${API_CONTAINER_PORT}"
     volumes:
-      - .:/usr/src/app
+      - ./:/usr/src/app
     working_dir: /usr/src/app
     command: npm run dev
