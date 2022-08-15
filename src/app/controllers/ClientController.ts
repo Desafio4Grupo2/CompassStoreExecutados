@@ -71,7 +71,7 @@ class ClientController {
   public async delete (req: Request, res: Response): Promise<Response> {
     try {
       const _id = req.params.id
-      ClientService.delete(_id)
+      await ClientService.delete(_id)
 
       return res.status(204).json({ message: `Client ${_id} successfully deleted` })
     } catch (error: any) {

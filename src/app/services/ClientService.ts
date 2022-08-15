@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import BadRequestError from '../errors/BadRequestError'
 import NotFoundError from '../errors/NotFoundError'
 import getAddress from '../utils/viacep'
+import SaleRepository from '../repositories/SaleRepository'
 
 class ClientService {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
@@ -14,19 +15,24 @@ class ClientService {
     })
 
     const result = await ClientRepository.get(query, page || 1)
+    const Client: any = result.Client // any is required because the Client is not accepting the type Client[]
 
-    if (!result) throw new NotFoundError('Sale Not Found')
-
-    return result
-  }
-
-  public async getById (Id: any) {
-    const result = await ClientRepository.getById(Id)
+    if (Client.length === 0) throw new NotFoundError('Client not Found')
 
     return result
   }
 
-  public async update (id: string, payload: IClient) {
+  public async getById (id: string): Promise<IClient> {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Client id is not valid')
+
+    const result = await ClientRepository.getById(id)
+
+    if (!result) throw new NotFoundError('Client not Found')
+
+    return result
+  }
+
+  public async update (id: string, payload: IClient): Promise<IClientResponse> {
     if (payload.cep !== undefined) {
       const viacepResponse: IViaCepResponse = await getAddress(payload.cep)
       const { uf, localidade, logradouro, complemento, bairro } = viacepResponse
@@ -36,15 +42,22 @@ class ClientService {
       payload.address = logradouro
       payload.neighborhood = bairro
       payload.complement = complemento
+
+      if (payload.uf === '') throw new BadRequestError('Uf can not be empty')
+      if (payload.city === '') throw new BadRequestError('City can not be empty')
+      if (payload.address === '') throw new BadRequestError('Address can not be empty')
+      if (payload.neighborhood === '') throw new BadRequestError('Neighborhood can not be empty')
     }
 
     if (!Types.ObjectId.isValid(id)) throw new BadRequestError('ClientId is not valid')
 
-    const findedClient = await ClientRepository.getById(id)
-    if (!findedClient) {
-      throw new NotFoundError('Client not found')
-    }
+    const foundClient = await ClientRepository.getById(id)
+    if (!foundClient) throw new NotFoundError('Client not found')
+
     const result = await ClientRepository.update(id, payload)
+
+    if (!result) throw new BadRequestError('Client not updated')
+
     return result
   }
 
@@ -78,6 +91,7 @@ class ClientService {
     payload.password = await bcrypt.hash(payload.password, salt)
 
     const result = await ClientRepository.create(payload)
+
     if (!result) throw new BadRequestError('Client not created')
 
     result.cpf = result.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
@@ -85,12 +99,17 @@ class ClientService {
     return result
   }
 
-  public async delete (id: string) {
+  public async delete (id: string): Promise<void> {
     if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Client Id is not valid')
-    const findedClient = await ClientRepository.getById(id)
-    if (!findedClient) {
-      throw new NotFoundError('Client not found')
-    }
+
+    const foundClient = await ClientRepository.getById(id)
+    if (!foundClient) throw new NotFoundError('Client not found')
+
+    const clientId = foundClient._id.toString()
+
+    const foundSale = await SaleRepository.getByClient(clientId)
+    if (foundSale) throw new BadRequestError('Client have sales associated')
+
     await ClientRepository.delete(id)
   }
 }

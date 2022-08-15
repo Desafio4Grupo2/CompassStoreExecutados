@@ -5,8 +5,8 @@ import ClientUpdateValidate from '../app/validations/client/ClientUpdateValidate
 
 const routes = Router()
 
-routes.get('/api/v1/client/:id', ClientController.getById)
 routes.get('/api/v1/client', ClientController.get)
+routes.get('/api/v1/client/:id', ClientController.getById)
 routes.post('/api/v1/client', ClientCreateValidate, ClientController.create)
 routes.put('/api/v1/client/:id', ClientUpdateValidate, ClientController.update)
 routes.delete('/api/v1/client/:id', ClientController.delete)
