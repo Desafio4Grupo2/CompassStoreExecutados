@@ -52,8 +52,8 @@ class ProductController {
   public async update (req: Request, res: Response): Promise<Response> {
     try {
       const _id = req.params.id
-      const { name, category, currency, price } = req.body
-      const result = await ProductService.update(_id, { name, category, currency, price })
+      const payload: IProduct = req.body
+      const result = await ProductService.update(_id, payload)
       return res.status(200).json(result)
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
@@ -68,7 +68,7 @@ class ProductController {
   public async delete (req: Request, res: Response): Promise<Response> {
     try {
       const _id = req.params.id
-      ProductService.delete(_id)
+      await ProductService.delete(_id)
       return res.status(204).json({ message: `Product ${_id} successfully deleted` })
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({

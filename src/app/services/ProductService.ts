@@ -20,20 +20,18 @@ class ProductService {
     })
 
     const result = await ProductRepository.get(query, page || 1)
+    const Client: any = result.Client // any is required because the Client is not accepting the type Client[]
 
-    if (!result) {
-      throw new NotFoundError('Product not found')
-    }
+    if (Client.length === 0) throw new NotFoundError('Product not Found')
 
     return result
   }
 
   public async getById (id: string) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Product id is not valid')
     const result = await ProductRepository.getById(id)
 
-    if (!result) {
-      throw new NotFoundError('Product not found')
-    }
+    if (!result) throw new NotFoundError('Product not found')
 
     return result
   }
@@ -41,36 +39,32 @@ class ProductService {
   public async create (payload: IProduct): Promise<IProduct> {
     const result = await ProductRepository.create(payload)
 
-    if (!result) {
-      throw new BadRequestError('Product not created')
-    }
+    if (!result) throw new BadRequestError('Product not created')
 
     return result
   }
 
-  public async update (id: string, Payload: IProduct) {
-    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('ProductId is not valid')
+  public async update (id: string, payload: IProduct) {
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Product id is not valid')
+
+    if (Object.keys(payload).length === 0) throw new BadRequestError('No body')
 
     const foundProduct = await ProductRepository.getById(id)
     if (!foundProduct) {
       throw new NotFoundError('Product not found')
     }
-    const result = await ProductRepository.updateProduct(id, Payload)
+    const result = await ProductRepository.updateProduct(id, payload)
 
-    if (!result) {
-      throw new BadRequestError('Product not updated')
-    }
+    if (!result) throw new BadRequestError('Product not updated')
 
     return result
   }
 
   public async delete (id: string) {
-    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Product Id is not valid')
+    if (!Types.ObjectId.isValid(id)) throw new BadRequestError('Product id is not valid')
 
     const findedProduct = await ProductRepository.getById(id)
-    if (!findedProduct) {
-      throw new NotFoundError('Product not found')
-    }
+    if (!findedProduct) throw new NotFoundError('Product not found')
 
     await ProductRepository.delete(id)
   }
