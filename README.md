@@ -28,6 +28,8 @@ Para o desenvolvimento deste projeto, utilizamos a linguagem Typescript, NodeJS 
 
 Antes de começar, você vai precisar ter instalado em sua máquina o Node.js, também é necessário uma collection no MongoDB Atlas e não se esqueça de criar a pasta `.env` seguindo o arquivo `.env.example`.
 
+Opcionalmente, você pode executar a API utilizando o [Docker]('https://www.docker.com/products/docker-desktop/'), para isso é necessário te-lo instalado em sua máquina.
+
 ## 🏁 Como inicializar
 
 Como descrito nos requisitos acima, primeiramente você precisa instalar o [NodeJS](https://nodejs.org/en/)
@@ -48,6 +50,10 @@ $ npm install
 Agora que você já possui as dependências instalas, basta iniciar o projeto (Não se esqueça de configurar as variáveis de ambiente no arquivo `.env`)
 
 ```bash
+# Caso tenha o docker
+$ docker-compose up
+
+# Caso não tenha o Docker
 # Inicia a aplicação em localhost:3000
 $ npm run dev
 

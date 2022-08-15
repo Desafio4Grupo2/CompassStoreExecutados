@@ -1,0 +1,11 @@
+version: "3.2"
+services:
+  api:
+    image: node:alpine
+    container_name: compass-store-api
+    ports:
+      - "${API_EXPOSED_PORT}:${API_CONTAINER_PORT}"
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm run dev
