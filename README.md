@@ -53,6 +53,7 @@ Agora que você já possui as dependências instalas, basta iniciar o projeto (N
 # Caso tenha o docker
 $ docker-compose up
 
+# Caso não tenha o Docker
 # Inicia a aplicação em localhost:3000
 $ npm run dev
 
