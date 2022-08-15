@@ -20,9 +20,9 @@ class ProductService {
     })
 
     const result = await ProductRepository.get(query, page || 1)
-    const Client: any = result.Client // any is required because the Client is not accepting the type Client[]
+    const Product: any = result.Client // any is required because the Client is not accepting the type Client[]
 
-    if (Client.length === 0) throw new NotFoundError('Product not Found')
+    if (Product.length === 0) throw new NotFoundError('Product not Found')
 
     return result
   }

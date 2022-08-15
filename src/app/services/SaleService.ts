@@ -22,8 +22,9 @@ class SaleService {
       query[key] = { $regex: payload[key] }
     })
     const result = await SaleRepository.get(query, page || 1)
+    const Sale: any = result.Client // any is required because the Sale is not accepting the type Client[]
 
-    if (!result) throw new NotFoundError('Sale Not Found')
+    if (Sale.length === 0) throw new NotFoundError('Product not Found')
 
     return result
   }
