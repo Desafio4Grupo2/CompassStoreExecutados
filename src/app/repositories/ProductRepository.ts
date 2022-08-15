@@ -1,7 +1,7 @@
 import { IProduct } from '../interfaces/IProduct'
 import ProductSchema from '../schemas/ProductSchema'
 import { PaginateResult } from 'mongoose'
-import customLabels from '../utils/paginate'
+import customLabels from '../utils/paginate/product'
 
 class ProductRepository {
   async get (payload: any, page: any): Promise<PaginateResult<IProduct>> {

@@ -1,7 +1,7 @@
 import { PaginateResult } from 'mongoose'
 import { IClient } from '../interfaces/IClient'
 import ClientSchema from '../schemas/ClientSchema'
-import customLabels from '../utils/paginate'
+import customLabels from '../utils/paginate/client'
 
 class ClientRepository {
   public async get (payload: any, page: any): Promise<PaginateResult<IClient>> { // any
