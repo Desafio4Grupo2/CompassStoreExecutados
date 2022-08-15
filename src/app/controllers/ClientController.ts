@@ -1,26 +1,86 @@
+import { IClient } from 'app/interfaces/IClient'
 import { Request, Response } from 'express'
-
 import ClientService from '../services/ClientService'
 
 class ClientController {
   public async get (req: Request, res: Response): Promise<Response> {
     try {
-      const {
-        name,
-        cpf,
-        email,
-        cep,
-        uf,
-        city,
-        address,
-        number,
-        complement,
-        neighborhood
-      } = req.query
-      const result = await ClientService.get()
+      const { page, ...body } = req.query
+
+      const result = await ClientService.get(body, page)
+
+      return res.status(200).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async getById (req: Request, res: Response): Promise<Response> {
+    try {
+      const id = req.params.id
+
+      const body = await ClientService.getById(id)
+
+      return res.status(200).json(body)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async create (req: Request, res: Response): Promise<Response> {
+    try {
+      const payload: IClient = req.body
+      const result = await ClientService.create(payload)
       return res.status(201).json(result)
-    } catch (error) {
-      return res.status(500).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async update (req: Request, res: Response) {
+    try {
+      const _id = req.params.id
+      const payload: IClient = req.body
+      const result = await ClientService.update(_id, payload)
+      return res.status(200).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async delete (req: Request, res: Response): Promise<Response> {
+    try {
+      const _id = req.params.id
+      await ClientService.delete(_id)
+
+      return res.status(204).json({ message: `Client ${_id} successfully deleted` })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 }

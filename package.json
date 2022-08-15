@@ -1,20 +1,55 @@
 {
-  "name": "arquitetura-node-typescript",
+  "name": "compass-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/server.ts",
-    "prepare": "husky install"
+    "dev": "nodemon -r dotenv/config ./src/server.ts",
+    "prepare": "husky install",
+    "test": ""
   },
+  "contributors": [
+    {
+      "name": "Antonio Ribeiro de Carvalho",
+      "github": "https://github.com/AntonioRdC"
+    },
+    {
+      "name": "Carlos Henrique Dias Bilby",
+      "github": "https://github.com/Bilbyc"
+    },
+    {
+      "name": "Rafael Henrique Menegon",
+      "github": "https://github.com/devrafamenegon"
+    },
+    {
+      "name": "Renan Carneiro Costa",
+      "github": "https://github.com/renancarneiro"
+    },
+    {
+      "name": "Vitoria Stefany Batista da Silva",
+      "github": "https://github.com/VitoriaStefany"
+    }
+    
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Desafio4Grupo2/CompassStoreExecutados.git"
+  },
+  "keywords": ["compass", "store", "nodejs", "typescript", "express", "mongodb", "mongoose"],
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Desafio4Grupo2/CompassStoreExecutados/issues"
+  },
+  "homepage": "https://github.com/Desafio4Grupo2/CompassStoreExecutados",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/joi": "^17.2.3",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
+    "dotenv": "^16.0.1",
     "eslint": "^8.21.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -27,8 +62,9 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "mongoose": "^6.5.1",

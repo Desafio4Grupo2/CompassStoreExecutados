@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import Joi from 'joi'
 
-const isValidBirthday = (value: string, helpers: any) => {
+const isValidBirthday = (value: string, helpers: any) => { // any
   const birthday = value.trim()
   const isValidDate = birthday.match(/^\d{2}\/\d{2}\/\d{4}$/)
   if (!isValidDate) return helpers.message('Birthday format is not valid (DD/MM/YYYY)')
@@ -28,28 +28,23 @@ const isValidBirthday = (value: string, helpers: any) => {
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = Joi.object({
-      name: Joi.string().required().min(3).max(100),
-      cpf: Joi.string().required().min(11).max(11).pattern(/^[0-9]+$/),
-      birthday: Joi.string().custom(isValidBirthday).required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().required().min(6).max(20),
-      cep: Joi.string().required().min(8).max(8).pattern(/^[0-9]+$/),
-      uf: Joi.string().optional().min(2).max(2).pattern(/^[a-zA-Z]+$/),
-      city: Joi.string().optional().min(3).max(50).pattern(/^[a-zA-Z]+$/),
-      address: Joi.string().optional().min(3).max(50).pattern(/^[a-zA-Z]+$/),
-      number: Joi.string().required().min(1).max(10),
-      complement: Joi.string().optional().min(3).max(50),
-      neighborhood: Joi.string().optional().min(3).max(50)
+      name: Joi.string().optional().trim(),
+      birthday: Joi.string().optional().custom(isValidBirthday),
+      password: Joi.string().optional().trim().min(6),
+      cep: Joi.string().optional().min(8).max(8),
+      address: Joi.string().optional().trim(),
+      number: Joi.string().optional(),
+      complement: Joi.string().optional()
     })
 
     const { error } = await schema.validate(req.body, { abortEarly: false })
-    if (error) throw error.message
+    if (error) throw error
     return next()
   } catch (error: any) {
     return res.status(400).json({
       message: 'Bad Request Error',
       details: [
-        { message: error }
+        { message: error.message }
       ]
     })
   }

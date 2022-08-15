@@ -1,13 +1,84 @@
+import { ISale } from './../interfaces/ISale'
 import SaleService from '../services/SaleService'
+import { Request, Response } from 'express'
 
 class SaleController {
-  async create (req, res) {
+  public async get (req: Request, res: Response): Promise<Response> {
     try {
-      const { name, age } = req.body
-      const result = await SaleService.create({ name, age })
+      const { page, ...body } = req.query
+
+      const result = await SaleService.get(body, page)
+      return res.status(200).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async getById (req: Request, res: Response): Promise<Response> {
+    try {
+      const id = req.params.id
+
+      const body = await SaleService.getById(id)
+
+      return res.status(200).json(body)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async create (req: Request, res: Response): Promise<Response> {
+    try {
+      const payload: ISale = req.body
+      const result = await SaleService.create(payload)
       return res.status(201).json(result)
-    } catch (error) {
-      return res.status(500).json({ error })
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async update (req: Request, res: Response): Promise<Response> {
+    try {
+      const _id = req.params.id
+      const body = req.body
+      const result = await SaleService.update(_id, body)
+      return res.status(200).json(result)
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
+    }
+  }
+
+  public async delete (req: Request, res: Response): Promise<Response> {
+    try {
+      const _id = req.params.id
+      await SaleService.delete(_id)
+      return res.status(204).json()
+    } catch (error: any) {
+      return res.status(error.statusCode || 500).json({
+        message: error.name,
+        details: [
+          { message: error.message }
+        ]
+      })
     }
   }
 }
